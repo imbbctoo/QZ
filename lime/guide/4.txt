@@ -1,0 +1,44 @@
+# Events
+
+在Lime中，事件的处理与Closure程序库中的差不多，你可以用‘goog.events.listen(src, type, listener, opt_capt, opt_handler)’添加事件监听，用‘goog.events.unlisten(src, type, listener, opt_capt, opt_handler)’取消监听，目标对象（src）就是你经常用的node元素。事件类型（tpye）是就是你一般情况下添加到你的DOM元素上的东西：通常有*mousedown*， *mousemove* 和*mouseup*的鼠标事件，还有*touchstart*，*touchmove*,，*touchend*和*touchcancel*的touch事件。事件类型可以列为一个数列。
+
+Lime事件处理背后的用意就是允许你将所有代码为支持鼠标事件和touch事件的设备只写一次。如果你以前已经尝试过，你会发现这不像听起来那么容易。首先，鼠标事件和touch事件没有一对一的关系。mousedown一般与touchstart一样，而mousemove与touchmove完全不同。其次，不同事件类型有执行方面的不同 - 不同事件的位置对于不同事件是不同的。再者，touch设备一般支持多触控，这意味着你不能使用针对个别事件的处理者（handler），但是你需要为个别互动设置下一个回答者（responder）。Lime尝试解决所有这些问题。
+
+在Lime中，当你为一个元素添加事件监听时，事件对象不是普通的浏览器事件，而是*lime.events.Event*的一个例子。这个对象的属性包括
+
+*   *position* - Coordinate for the event in target node's coordinate space
+*   *screenPosition* - Coordinate for the event in screen coordinate space
+*   *targetObject* - Object that fired the event
+*   *event* - Normal browser event(you can call stopPropagation() on that for example)
+
+这些位置对于鼠标和touch事件是一样的。通过node对象的帮手函数，所有坐标能被转换成不同坐标。
+
+## event.swallow()
+
+事件对象也有‘swallow(eventType,handler)’方法，这允许你在多个事件中进行交互，你使用它之后，你监听第一个互动（mousdown，touchstart等），然后可以吞噬（swallow）下一个mousemove或mouseup的事件。swallow意味着handler只会在它仍然是互动的一部分时被调用。在一个多触控的设备每一个单独的触摸有自己的swallow handler，所以如果通过一只手指你的touchstart事件开始时，这不会与其他时刻的其他手指混淆。当交互结束时（touchend, mouseup）所有swallowd listener将自动清除。
+
+	#!JavaScript
+	goog.events.listen(ball,['mousedown','touchstart'],function(e){
+	      this.setFill('#c00'); // ball is colored to red when touched
+        
+	      e.swallow(['mouseup','touchend','touchcancel'],function(){
+	            this.setFill('#0c0'); // ball is colored back to green when interaction ends
+	      }
+	});
+
+## Dragging
+
+一个普通的交互就是拖动一个元素。Lime已经将它简化。在事件‘event.startDrag()’，你也可以提供参数以限制可拖动的范围，返回到中心或者提供特定的对象。因为drag方法采用与‘swallow()’相同的逻辑，每一个拖动是分开的，所以你可以同时拖动多个物体而不写一行代码。
+
+	#!JavaScript
+    	goog.events.listen(ball,['mousedown','touchstart'],function(e){
+    	      e.startDrag(true); // true is for snapToCenter
+    	});
+
+## 非DOM元素
+
+当你使用Canvas渲染时，没有DOM元素承载事件。当开发未经加工的Canvas方法时这可能成为问题，因为你只有一个事件目标。幸运的是在Lime中使用不同的渲染不会影响事件系统。你仍可以在没有DOM对等物的node上监听事件。
+
+## The Hit Test
+
+如果你有一些古怪的自定义显示对象，你可以重载它的‘hitTest()’方法以给它一个自定义的区域，它可以从这里回应事件。默认所有sprite回应它们的边界盒子（对于填充无效）。自定义形状核对它们自己的几何。层不具有任何身体，所以它们回应所有它们的子元素。

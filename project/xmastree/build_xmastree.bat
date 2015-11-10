@@ -1,0 +1,1 @@
+python ../../bin/lime.py build xmastree -o ../../compiled/xmastree_c/xmastree_c.js -a -p xmastree.start

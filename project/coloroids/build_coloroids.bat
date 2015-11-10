@@ -1,0 +1,1 @@
+python ../../bin/lime.py build coloroids -o ../../compiled/coloroids_c/coloroids_c.js -a -p coloroids.start

@@ -1,0 +1,1 @@
+python ../../bin/lime.py build loverose -o ../../compiled/loverose_c/loverose_c.js -a -p loverose.start

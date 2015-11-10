@@ -1,0 +1,72 @@
+# Building
+
+如果你已经完成之前的例子你可能会想在[Firebug](http://getfirebug.com/)或Webkit开发者工具看看内部是怎样的。在结果表格中看到的也许不能够使你满意。甚至Hello World的例子需要许多不同的Javascript文件加载，而且它们的总大小很大。不像[YSlow](http://developer.yahoo.com/yslow/)或者[Google Page Speed](http://code.google.com/speed/page-speed/)说的那样，它应该如何做到，而不是像噩梦一样。
+
+幸好，有一个叫*Closure Compiler*的解决方法，而且当你第一次运行init时它已经下载下来了。你将永远不能散布开发文件（除非是开源的结果）。一旦你已经完成你的工程，只要运行*lime.py*帮手脚本中的*build*命令。这将组合所有需要的Javascript代码到一个文件里。要运行这个文件你可以使用相同的之前的HTML文件，而你不再需要将Closure程序库的base.js包括在内。
+
+build命令吸收了你需要编译的代码的base命名空间。这个命名空间在你的工程的entrypoint代码中需要以‘goog.provide()’定义。用‘-o’参数，你可以定义编译后的版本的路径（默认输出到屏幕）。
+
+	#!Bash
+	bin/lime.py build helloworld -o helloworld/compiled/hw.js
+
+## 高级优化模式
+
+虽然默认build过程除去了所有空格，替换变量并且做了更多事情，但是压缩率可以更高。如果我们开启高级优化，附加的优化，像对于所有变量进行属性名更换和冗余去除也会发生。你的最终代码将更小，但是如果你想用这个模式，你必须遵守一些额外的要求，比如说你不能不一致地使用属性名（在某些地方使用点标记，在其他地方使用字符串标记），而且在静态函数中必须使*@this*对象类型变为*jsdoc*。更多在[here](http://code.google.com/closure/compiler/docs/api-tutorial3.html)。想要使用高级优化模式你只要在build命令后添加‘-a’。
+
+	#!Bash
+	bin/lime.py build helloworld -o helloworld/compiled/hw_adv.js -a
+
+要进一步优化编译的版本的话，你最好用‘gzip’压缩。[Read more](http://code.google.com/speed/page-speed/docs/payload.html#GzipCompression)
+
+### 声明外部变量
+
+声明用于高级编译的外部变量，在build命令中使用‘-e’选项。这个选项可以被多次使用，以防你有多个外部变量文件。
+
+    #!Bash
+    bin/lime.py build helloworld -o helloworld/compiled/hw_adv.js -e helloworld/externs/some_externs.js -e helloworld/externs/more_externs.js -a
+
+## 输出
+
+就像以前说的一样，高级优化模式替换所有变量的名字。这表明你没有办法将你的编译代码与外部代码进行交互（比如你的HTML文件里的上传处理程序）。你可以从你的代码中定义外部变量和输出以应对这个。外部变量表示这个变量/属性将不会被重命名，所以你可以通过任何外部代码与它进行完全的交互。输出表示变量将重命名，但是将有一个连接初始变量的链接被创建。99%的情况你将只需要输出，并同过此方法节约许多空间。
+
+    #!JavaScript
+    goog.exportSymbol('helloworld.start', helloworld.start);
+
+
+## 调试
+
+有时候你会发现，按照高级优化模式的教程你已经造成了一个错误，而且你的编译后的版本再也无法在运行，然而你的源码能顺利运行。一般调试技术不能在这里得到应用，因为压缩后的文件是完全不可读的。解决方案是在编译的同时，加一个‘-m/--map’选项。这样编译器做了一个函数地图文件以在初始资源中将压缩后的函数与未压缩的函数链接起来。你需要下载一个Firebug的插件——Closure Inspector以使用地图功能。现在Firebug能够在初始资源中显示哪里出错了。[Read more](http://code.google.com/closure/compiler/docs/inspector.html)
+
+    #!Bash
+    bin/lime.py build helloworld -o helloworld/compiled/hw_adv.js -a -m helloworld/complied/debug_map.txt
+
+
+## 预加载/离线支持
+
+*预加载支持现在十分有限。将来更多的功能将加入。*
+
+如果只有一个JavaScript文件，你的游戏能够很容易地发布，但是你需要使用的JavaScript文件和资源仍然需要在每次游戏启动时被载入。要想使得玩获得更好的体验，你可以为你的游戏编译预加载文件。这个预加载文件使用现代浏览器的离线支持能力，而且在游戏开始之前下载所用你需要的文件。更好的是，下次这个游戏启动时，它的速度更快，因为它被下载下来了。如果游戏被更新，预加载将首先下载更新文件，然后开始游戏。对iOS设备而言，离线接入是特别重要的，这可以允许人们玩你的web应用游戏，即使当他们没有连接网络。
+
+你可以通过使用‘-p’选项来建立带有预加载功能，以及拥有一个在开始游戏时产生callback的游戏。his callback is the same Javascript function name that you would usually use in the onload handler of your development version.
+
+    #!Bash
+    bin/lime.py build helloworld -o helloworld/compiled/hw_adv.js -a -p helloworld.start
+
+
+这里是一些使用建立预加载产生的[*.manifest](http://www.w3.org/TR/html5/offline.html#manifests) 文件的规则：
+
+*   Manifest文件，在你的web服务器上需要以*text/cache-manifest*的方式使用。[Tutorial](http://www.thecssninja.com/javascript/how-to-create-offline-webapps-on-the-iphone)
+*   如果你使用游戏的assets（图片等），你需要将它们手动列在manifest文件中
+*   如果你改变一些manifest中的文件文件（没有重新运行build命令），你也需要改变manifest文件。Simplest is to just update the generation time.
+
+
+
+
+
+
+
+
+
+
+
+

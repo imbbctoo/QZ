@@ -1,0 +1,79 @@
+# 动画
+
+动画提供一个随着时间改变元素属性方法。典型的用处就是自然而然地使对象变大或改变它的位置。要做一个动画，你得新建一个动画对象，然后在目标对象上运行它。不要忘了你得用‘goog.require()’，因为没有什么动画是自动载入的。默认情况下所有动画运行时长为1秒钟，你可以用‘setDuration()’的方法来改变它。
+
+	#!JavaScript
+	var fadehalf = new lime.animation.FadeTo(.5).setDuration(2);
+	ball.runAction(fadehalf);
+
+支持的不同类型的动画：
+
+-   *MoveBy* - move object by offset from current location.（相对移动）
+-   *MoveTo* - move object to specific location.（绝对移动）
+-   *ScaleBy* - scale objects dimensions by a factor. Passing 2 makes object 2 times bigger from its current size.（相对）
+-   *ScaleTo* - scale objects dimensions to a given factor.（绝对）
+-   *RotateBy* - rotate object by a given angle（相对旋转）
+-   *RotateTo* - rotate object to a specific angle（绝对角度）
+-   *ColorTo* - change objects color from current color to another.
+-   *FadeTo* - fade elements opacity to a given value.
+
+如果你想知道什么时候一个动画已经结束，你可以监听它的*stop*事件，事件名也被定义为‘lime.animation.Event.STOP’。
+	#!Javascript
+	var moveleft = new lime.animation.MoveBy(-100,0);
+	ball.runAction(moveleft);
+	goog.events.listen(moveleft,lime.animation.Event.STOP,function(){
+	      alert('Ball has finished moving');
+	})
+
+## 多目标动画
+
+有可能在在多个目标上运行一个动画。你新建一个动画实例，然后将其添加到目标上，最后调用‘play()’的方法。
+
+	#!JavaScript
+	var doublesize = new lime.animation.ScaleBy(2);
+	doublesize.addTarget(ball);
+	doublesize.addTarget(square);
+	doublesize.play();
+
+## sequence，spawn和loop
+
+sequence，spawn和loop是组合其他动画以合成新效果的动画。sequence可以无限制地加入子动画元素并一个一个地运行。spawn也很相像但是所有子动画同时运行。loop用于动画的循环播放。
+
+	#!Javascript
+	var zoomout = new lime.animation.Spawn(
+	      new lime.animation.ScaleTo(5),
+	      new lime.animation.FadeTo(0)
+	 );
+        
+	var keepturning = new lime.animation.Loop(
+	      new lime.animation.RotateBy(90)
+	);
+
+## 预编译的 CSS3 动画
+
+这使得Javascript动画更早地实现了人们描述的动画效果。这意味着效果产生的方式是由Javascript的timer interval改变对象属性用而产生的。一些现在的浏览器也支持叫做CSS3过度的不同类型的效果。这些事件可能运行地更流畅因为他们通过某些平台（iOS）硬件加速。在LimeJS中你得通过运行‘enableOptimizations()’的方法来加速，这是你得动画在iOS设备上运行更加流畅，而且可能使用更少的CPU。
+
+	#!Javascript
+	ball.runAction(new lime.animation.MoveBy(100,0).enableOptimizations());
+
+不足之处就是‘enableOptimizations()’不总是工作。这也就是你尤其要说你希望动画使用这个特性的原因。CSS3过度API处理不同脚本时不是那么灵活。
+
+不能正确支持‘enableOptimizations()’的情况：
+
+- 如果move，scale和rotate动画的计时器重合但是不是同一个时，你不能将它们组合。你仍然可以将他们以Sequence的方式组合，或者如果它们的时长一致，你可以用Spawn的方式将他们组合。
+- 如果position，scale和size中其中参数是手动改变而其他的是自动的，你不能将它们组合。
+
+## Easing
+
+easing定义了当动画运行时时间如何改变的特性，它提供更多的自然的运动因为它不改变固定间隔的属性，这是一个对象减速和加速。所有Lime动画默认缓冲效果，这意味着对象首先会加速，然后在到达目的地时会减速。你用‘setEasing()’的方法定义easing函数，内部的值包括：
+
+-   lime.animation.Easing.EASE
+-   lime.animation.Easing.LINEAR
+-   lime.animation.Easing.EASEIN
+-   lime.animation.Easing.EASEOUT
+-   lime.animation.Easing.EASEINOUT
+
+你也可以提供以贝塞尔曲线的点做成的自定义函数。
+
+
+*Lime的动画不使用或依靠goog.fx.\*的库。在Closure Library中存在用于制作动画的普通函数，但是不是特别适用于LimeJS的逻辑。这在以后可能会改变，但也可能不会。*

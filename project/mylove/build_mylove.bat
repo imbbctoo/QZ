@@ -1,0 +1,1 @@
+python ../../bin/lime.py build mylove -o ../../compiled/mylove_c/mylove_c.js -a -p mylove.start

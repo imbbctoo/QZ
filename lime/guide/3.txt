@@ -1,0 +1,96 @@
+# 形状与填充
+
+## Sprites
+
+前几章我们学习了关于node的类。虽然node是LimeJS中最重要的类，但是你几乎从不创建一个node。我们可以创建sprite，sprite是矩形的显示对象。它的外观可以通过方法*setFill(fill)*来添加，所有node的函数在sprite和其它形状都可以使用。这也包括添加子sprite。
+
+	#!JavaScript
+	var redsquare = new lime.Sprite().setSize(50,50).setFill('#c00').setAnchorPoint(0,0);
+	layer.appendChild(redsquare);
+
+## 其他普通形状
+
+### Circle
+
+用circle能很容易的建立圆形或椭圆，所有方法与sprite相同。注意你不是定义半径而是定义它的宽和高。
+
+	#!JavaScript
+	var circle = new lime.Circle().setSize(40,40);
+		// circle with radius 20
+
+### RoundedRect
+
+圆角矩形（roundedRect）除了有sprite的方法，还有一个额外方法*setRadius(radius)*，radius就是角的半径。
+
+	#!JavaScript
+	var shape = new lime.RoundedRect().setSize(100,40).
+		setRadius(10);
+
+### Label
+
+label可以放入文本内容，文字可以通过*setText(str)*的方法来定义。你也可以设置字体属性和alignment。如果你如果你不定义label的大小，label会自动以文字的长度和字体的大小来计算label的大小。
+
+	#!JavaScript
+	var lbl = new lime.Label().setText('Your Score: 10').setFontFamily('Verdana').setFontColor('#c00').setFontSize(26).setFontWeight('bold').setSize(150,30);
+
+### Polygon
+
+polygon是LimeJS中最抽象的形状，你需要定义点来做出polygon，其他的都为你做好了。你不能改变polygon的锚点和大小因为this are also taken from the point values。这种灵活的方式允许你创造几乎所有形状，但也提示你较少的点将达到较好的效果
+
+	#!JavaScript
+	var triangle = new lime.Polygon().
+		addPoints(0,-1, .5,.5, -.5,.5);
+
+## Fills
+
+简单的创建一个形状将不会在屏幕上显示，只会在两只之间精力联系。为了添加一些可视的外观，你通过*setFill(fill)*方法设置填充属性。传递给*setFill*的属性可以是执行*lime.fill.Fill*中的对象，或者对于一些更简单的填充你可以直接传递  符合*lime.fill.Fill.parse()*函数语法的值。   
+
+### Colors
+
+颜色是你可以加到形状上的最简单的填充，你可以以不同形式加入值，如十六进制的字符串，rgb(a)的字符串或者直接rgb(a)值
+
+	#!JavaScript
+	shape.setFill(100,0,0); //dark red
+	shape.setFill(0,0,0,.5); // 50% transparent gray
+	
+	shape.setFill('#ffffff'); //white
+	shape.setFill('rgb(100,0,0)'); //same dark red as first
+	
+一旦你创建了你的颜色填充对象，你可以使用自建的函数改变它的值。更特殊的是，你可以通过方法*addBrightness(factor)*改变颜色的明暗度，通过*addSaturation(factor)*的方法改变颜色的饱和度。因子的范围必须是-1到+1之间。
+
+	#!JavaScript
+	var green = new lime.fill.Color(0,100,0); // neutral green
+	var darker_green = green.addBrightness(-.2);
+	var intensive_green = green.addSaturation(.3);
+
+
+
+### 图片
+
+顾名思义，图片填充允许你设置外部的图片作为形状的背景。图片适应元素的大小。
+
+	#!JavaScript
+	sprite.setFill('assets/image.png');
+
+### Gradients
+
+现在只有*lime.fill.LinearGradient*支持渐变，它允许创建一个从一种颜色朝一个方向变为另一种颜色的背景，而辐射状的渐变现在不支持。渐变的角度可以通过的*setDirection(x0,y0,x1,y1)*方法定义，点P(x0,y0)和P(x1,y1)定义了1x1方块中开始和结束的位置。渐变的颜色可以使用addColorStop(offset,var_args)来定义，offset必须好似0-1之间。
+
+	#!JavaScript
+	var gradient = new lime.fill.LinearGradient().
+		setDirection(0,0,1,1). // 45' angle 
+		addColorStop(0,100,0,0,1). // start from red color
+		addColorStop(1,0,0,100,.5); // end with transparent blue
+	sprite.setFill(gradient);
+
+## 遮罩
+
+为形状添加遮罩就意味着你仅仅显示你的元素的某些部位。在LimeJS中遮罩就像在flash中一样简单 - 你创建两个对象，将其中一个座位另一个的遮罩，只就意味着只有相交的部分才会被显示，而其他部分从原始的元素上被裁去。现在只支持矩形遮罩。在遮罩设置以后你仍能修改两个元素的属性变化。
+
+	#!JavaScript
+	var mask = new lime.Sprite().setSize(100,100).setPosition(100,100);
+	parent.addChild(mask);
+	var image = new lime.Sprite().setSize(300,200).setFill('assets/myimage.png');
+	parent.addChild(image);
+	
+	image.setMask(mask);

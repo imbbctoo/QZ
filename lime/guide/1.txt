@@ -1,0 +1,70 @@
+# 时间轴
+
+## Director
+
+一切都要从director开始。director是一个每个游戏所需要的基本对象，它连接所有网页上的Limejs逻辑到任何单个地方。如果你来自flash世界你可以把它当做一个舞台，Cocos2d用户可以当做自己的director。所有其他人可以把它当做一个前部的控制者。
+
+每一个游戏只有一个director的例图。它操控游戏的全程视口，控制屏幕上的可见物。在你的逻辑涌现之初你得创建一个director的例图。构造函数的方法的参数是container DOM元素，舞台宽度和高度以像素表示。
+
+	#!JavaScript
+	var director = new dfkit.Director(document.body,320,460);
+
+## Scene
+
+scene是一个可视元素的不独立的部分，覆盖了所有的视口，这说明在同一时间只有一个scene能被激活。比如说，在一般的游戏逻辑中你将会有菜单的scene，游戏的scene和游戏结束的scene。要使一个scene可见，你调用‘director.replaceScene(scene)’或者‘director.pushScene(scene)’。区别就在于*pushScene* 不会去除之前的scene，但是将他保留在一个隐藏的stack中，因此你可以通过“director.popScene()”使它可见
+
+	#!JavaScript
+	var scene = new lime.Scene();
+	director.replaceScene(scene);
+
+## Transitions
+仅仅使用‘replaceScene()’只能做到快速的scene间的切换，以至于在视觉上不可接受。你可以通过设置‘replaceScene()’的*transition*和*duration*属性以使它更好。transition定义了当前的scene被解除和新的scene被激活的动画制作。现成的有多种多样的*Silde*和*Move*的过度，还有用于淡入效果的*Dissolve*
+
+	#!JavaScript
+	director.replaceScene(menuscene,lime.transition.SlideInRight);
+
+	director.replaceScene(gamescene,lime.transition.Dissolve,2);
+
+## ScheduleManager
+
+Lime中的所有东西都是以repaint-dirty模式绘制的，这说明每次你改变某些东西，你的方法调用不会严格地与对等的DOM或Canvas2dContext调用相互关联，相反的，你设置的属性被标记为污物并将在下一帧中被擦去。这就允许我们只能更新一次，只能更新需要更新的且保持所有更新不出状况。最后一条准则允许我们在任何时候在渲染的方法之间切换。由于在Javascript中没有任何的on-enter-frame事件，我们坐了一个*lime.sheduleManager*静态对象来模拟它。以下是它提供的方法：
+
+- schedule(callback, context) 
+	- Call a function in every frame. Context is object that represents *this*.
+	this固定指向运行时的当前对象
+- unschedule(callback, context) 
+	- Clear previously scheduled function.
+- scheduleWithDelay(callback, context, delay, opt_limit) 
+	- Same as *schedule* but function is only called if if more than *delay* seconds has passed from last execution.
+- callAfter(callback, context, delay) 
+	- Only call function once after the delay.
+
+你将不会在你的游戏代码中直接使用Javascript内置的方法‘setTimeout()’和‘setInterval()’（反正我是用的，在循环的优化方面），*lime.schduleManager*为你提供了有相同功能和额外特性。你的回调函数通过同一个回调函数最近的一次执行在几毫秒内所延迟的参数被调用。这允许你做出顺利的动画效果即使CPU的表现大大改变。
+
+	#!JavaScript
+	var velocity = 2;
+	lime.scheduleManager.schedule(function(dt){
+	      var position = this.getPosition();
+	      position.x += velocity * dt; // if dt is bigger we just move more
+	      this.setPosition(position); 
+	},ball);
+
+## Pausing
+
+使用scheduleManager而不是timer函数（这个我也用的）也给我们带来支持暂停的好处。当你希望暂停你的游戏你只要在你的director对象上调用‘setPaused(true)’，这能暂停所有的时刻表函数和动画效果。一旦通过调用‘setPaused(false)’你恢复，你的所有代码将照常恢复。当你的游戏处于暂停状态，*lime.PauseScene*的例图被放置在director的一个激活的scene中。如果你希望在这个状态有一些定制的外观，你可以无视这个类功能。
+
+	#!JavaScript
+	mygame.director.setPaused(true);
+
+## Layers
+
+现在我们准备在屏幕上加一些东西。为了更好地展示对象我们引入*lime.Layer*对象。你可以把它当做ps中的层。层是用来承载物品的，它们就像任何其他对象，区别就在于它们没有身体或大小。它们的唯一内容就是它们的子对象。所以如果需要的话，你创建它们，将它加到tree，位置，并将子对象加到它们身上。只需明白，层不是必须的 - 你可以添加任何展示的对象到scene上，而层使你的文件更清晰。
+
+	#!JavaScript
+	var layer = new lime.Layer().setPosition(100,100);
+	scene.appendChild(layer);
+    
+	for(var i=0;i<5;i++){
+	      var box = customMakeBoxFunc().setPosition(i*50,0);
+	      layer.appendChild(box);
+	}

@@ -1,0 +1,1 @@
+python ../../bin/lime.py build myrose -o ../../compiled/myrose_c/myrose_c.js -a -p myrose.start

@@ -1,0 +1,1 @@
+python ../../bin/lime.py build numrubik -o ../../compiled/numrubik_c/numrubik_c.js -a -p numrubik.start

@@ -1,0 +1,1 @@
+python ../../bin/lime.py build blackbox -o ../../compiled/blackbox_c/blackbox_c.js -a -p blackbox.start

@@ -1,0 +1,1 @@
+python ../../bin/lime.py build dung2048 -o ../../compiled/dung2048_c/dung2048_c.js -a -p dung2048.start

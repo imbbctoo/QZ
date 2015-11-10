@@ -1,0 +1,1 @@
+python ../../bin/lime.py build clapping -o ../../compiled/clapping_c/clapping_c.js -a -p clapping.start

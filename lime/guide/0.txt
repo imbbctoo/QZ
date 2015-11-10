@@ -1,0 +1,82 @@
+开始
+
+安装
+
+windows用户：请按照README文件的安装向导安装
+
+limeJS的开发需要[Python 2.6+](http://www.python.org/), [Git](http://git-scm.com/download) 和[Subversion](http://subversion.apache.org/) 或者Git-SVN.如果你想使用Closure Compiler，还需要[Java](http://www.java.com/en/) 。一旦你有了建好的游戏，就说明没有特别需要的分发服务器。
+
+从[github](http://github.com/digitalfruit/limejs)上下载资源。文件包括Javascript源文件(在 lime/里面)和一个Python命令条工具帮手（lime.py）在bin/ 目录里面。
+
+通过运行以下命令，检查CLI功用的特性
+
+#！Bash
+bin/lime.py --help
+
+你将看到功用可以处理初始的安装，从属更新，工程创建，样本生产和工程构建。
+
+通过运行初始安装以开始：
+
+#！Bash
+bin/lime.py init
+
+这将下载[Closure Library](http://code.google.com/closure/library/)，[Box2D physics library](http://box2d.thinkpixellab.com/)，[Closure Compiler](http://code.google.com/closure/compiler/)和[Templates](http://code.google.com/closure/templates/)，并使它们正确安装于是它们能够正常使用。
+
+你完成了！运行以下命令以创建一个简单的helloword工程
+
+#！Bash
+bin/lime.py create helloworld
+
+用浏览器打开helloword/helloword.html
+
+## Common Closure
+
+
+LimeJS是用Closure程序库构建的。Closure是Google用JavaScript构建的，它被用于许多Google的大工程如Gmail和Docs的开发。它具有很高的可持续性和可读性，快速并且特性丰富。它也与其他Closure工具如Compiler和Templates整合得很好。
+
+### 命名空间
+
+Closure的最引人注目的特性之一就是它命名空间系统。不像一些其他程序库所有代码在文件与文件之间分开，每个文件为它的代码提供了名字并且可以继承一些其他文件。在开发程序时你只需要引用给你新的函数‘goog.provide(namespace)’和‘goog.require(namespace)’的文件*base.js*。provide函数声明这个文件中的所有代码可用所给的命名继承。require函数用于要求其他该命名的文件。整个系统与其他有命名空间的语言很相似（Java，ActionScript，Python），不同的是，命名不需要指明文件夹位置，可以随意放置。Closure使用内部的*deps.js*文件以标明命名空间的文件路径。这意味着如果你添加新的命名空间你得执行
+
+#！Bash
+python bin/lime.py update
+
+以更新*deps.js*，以使你的新文件得以运行。
+
+在你自己的工程文件中使用goog.provide()不是必要的，但是我们推荐你这么做。使用这种方式汇编你的游戏也将使你获得更好的结果。
+
+### 继承
+
+用LimeJS工作时，一项最常做的事就是在一个内建的类中建一个自定义类。这样，你能够将你的自定的游戏中的特定方法加到一般对象上。这是一个*lime.Circle*的子类*mygame.Ball*的例图
+
+#!JavaScript
+// make file loadable from other files
+goog.provide('mygame.Ball'); 
+// request that lime.Circle's definitions are loaded
+goog.require('lime.Circle'); 
+// new constructor
+mygame.Ball = function(){
+   // call parents constructor 
+goog.base(this);
+// custom initialization code
+this.color_ = 'red';
+}
+// define parent class
+goog.inherits(mygame.Ball,lime.Circle); 
+// new custom method for ball instances
+mygame.Ball.prototype.myMethod = function(){
+}
+
+### 事件
+
+Closure将用于对象的监听与非监听的事件提供给了你。你可以添加一个事件以函数
+‘goog.events.listen(src, type, listener, opt_capture, opt_handler)’。
+src是添加事件的对象，
+type是事件名称（比如mousedown），
+listener是回调函数，在事件触发时被调用，
+你也可以使事件以抓取的形式（capture phase）调用，并且为回调函数定义自定义环境对象（custom context object）。
+移除事件监听可以使用‘goog.event.unlisten()’，这有着所有相同参数的。
+
+如果你希望将自定义对象中添加（dispatch）到事件上，你需要让他们作为*goog.events.EventTarget*的子类，并调用对象的‘dispatchEvent()’方法。
+
+*你还可以知道更多关于Closure Library的, 查看[docs](http://closure-library.googlecode.com/svn/docs/index.html), [book](http://www.amazon.com/Closure-Definitive-Guide-Michael-Bolin/dp/1449381871) 或者 [video](http://www.youtube.com/watch?v=yp_9q3tgDnQ) for more information.*

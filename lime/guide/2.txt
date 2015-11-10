@@ -1,0 +1,93 @@
+# Layout和nodes
+
+## 调整大小和方位变化
+
+在LimeJs中，支持不同的屏幕大小和视口大小的变化很容易，都是自动调好的。在Director的构造中（或在*setSize*方法中），但是这不需要与实际的屏幕大小相适应。你的游戏的实际大小是从你游戏所在的容器DOM元素中得到的。如果容器对象的大小改变，你的游戏也会调整大小以填充容器。注意虽然你的游戏的比例改变，你的游戏的坐标将仍然反应你的做出的舞台大小所以你可以完全忽略它。
+
+## 全屏游戏
+
+默认的工程样板直接在body元素内部初始化Director，这使得我们更容易做出一个始终处于全屏状态的游戏 - 这对于移动web应用程序再好不过了，但是这不是必须的。你可以添加一个固定大小的DIV元素并用它作为一个父容器，就像HTML页面中的flash游戏。
+
+## Nodes
+
+node是LimeJS中最重要的元素，因为它是显示对象树结构中所有对象的基本对象。事实上甚至director，scene和layer类都继承了node类。
+
+node类为显示对象定义了许多常见功能。注意，所有设值函数自己返回对象，所以它们能被组合在一起，所有设值也有更好的对等物。一切都与DOM元素树或者flash显示对象树很相似。
+
+	#!JavaScript
+	var parent = new lime.Node();
+	var child = new lime.Node();
+	parent.appendChild(child);
+
+### Size
+
+	#!JavaScript
+	var node = new lime.Node().setSize(50,50);
+	
+	var size = node.getSize(); // returns object
+	size.width+=100;
+	node.setSize(size);
+	
+	node.setSize(new goog.math.Size(100,50));
+
+### Position
+
+	#!JavaScript
+	var node = new lime.Node().setPosition(200,100);
+	
+	var pos = node.getPosition(); // return object
+	pos.y = 150;
+	node.setPosition(pos);
+
+	node.setPosition(new goog.math.Coordinate(50,50));
+
+### Scale
+
+Scale通过一个因子使得对象大小改变。注意，元素的位置没有改变。
+
+	#!JavaScript
+	var node = new lime.Node().setScale(1,2);
+	node.setScale(.7); //scale in both axis
+	node.setScale(new goog.math.Vec2(1,2));
+
+### Rotation
+
+对象的旋转以角度定义。
+
+	#!JavaScript
+	var node = new lime.Node().setRotation(90);
+	
+
+### 质量
+
+设置对象的质量值使得对象缩小到一个更小的大小，然后按比例扩大到整个元素的初始大小。在一些情况下这允许降低质量以促进表现。注意不能使质量值超过1，它不能变的更加好了。
+
+	#!JavaScript
+	node.setQuality(.5);
+
+### AutoResize
+
+autoResize定义了当父对象改变时，对象的大小将如何改变。虽然在LimeJS中没有百分比的单位大小，但是这允许你通过有力的方式获得相同的结果。字段lime.AutoResize定义不同富有可变性的属性。你通过组合这些‘setAutoResize()’方法的位屏蔽属性以获得你需要的组合。相同的方法也在iOS UIKit开发框架中被使用。
+
+	#!JavaScript
+	box.setAutoResize(lime.AutoResize.WIDTH | lime.AutoResize.HEIGHT);
+	
+	footer.setAutoResize(lime.AutoResize.TOP);
+
+
+### Anchor Point
+
+在默认情况下，在HTML中所有对象位置是相对于它的左上角，在游戏中这不太合适。有许多对象在其他地方有很重要的点。node的方法‘setAnchorPoint(vec2)’允许你设置任何点作为相对的基准点。vector的值在0-1之间，（0,0）指左上角，（1,1）指右下角。默认情况下，所有对象的位置在中间。anchor point就是用来定位元素和他的子元素还有旋转的。
+
+	#!JavaScript
+	box.setAnchorPoint(0,0);
+	
+	circle.setAnchorPoint(.5,.5); //also default value
+
+## 坐标变换
+
+某些情况下你可能需要设置元素之间的相对位置，当这些对象不在同一layer时，不像设置来自不同父类的位置属性那么容易。为了解决这个问题Lime提供了函数以转换从一个node的坐标空间到另一个
+
+	box.localToScreen(coord) - Converts local coordinate to screen coordinate.
+	box.screenToLocal(coord) - Converts screen coordinate to local nodes space.
+	box.localToNode(coord,node) - Converts local coordinate to any other nodes coordinate space.
