@@ -25,8 +25,6 @@ numrubik.start = function() {
 
 	numrubik.lime = new numrubik.Lime();
 
-	numrubik.myScore = 0;
-
 	var scene = new lime.Scene();
 
 	var layer = new lime.Layer().setPosition(160, 230);

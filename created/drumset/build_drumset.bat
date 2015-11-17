@@ -1,0 +1,1 @@
+python ../../bin/lime.py build drumset -o ../../compiled/drumset_c/drumset_c.js -a -p drumset.start

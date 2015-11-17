@@ -133,7 +133,7 @@ dung2048.Game = function(myMode) {
 		}
 	}, false, this);
 
-	goog.events.listen(this, 'keydown', function(e) {
+	goog.events.listen(this, 'keydown', function() {
 		if (this.flag[2] && !this.timer[2].enabled) {
 			if (!this.flag[1]) {
 				this.flag[2] = false;
@@ -839,7 +839,7 @@ dung2048.Game.prototype.endGame = function(val) {
 	}
 	this.notice[val].lbl_s.setText(parseInt(this.lbl2.getText()) + ' + ' + bonus);
 	dung2048.myScore = parseInt(this.lbl2.getText()) + bonus;
-	var bScore = dung2048.getCookie('myScore');
+	var bScore = parseInt(dung2048.getCookie('myScore'));
 	if (bScore != null && bScore != '') {
 		bScore = (bScore > dung2048.myScore ? bScore : dung2048.myScore);
 	} else {

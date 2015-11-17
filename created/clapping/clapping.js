@@ -12,11 +12,14 @@ goog.require('lime.Director');
 goog.require('lime.GlossyButton');
 goog.require('lime.Layer');
 goog.require('lime.Scene');
+goog.require('lime.audio.Audio');
 goog.require('lime.transitions.SlideIn');
 
 // entrypoint
 clapping.start = function() {
 	eval(unescape('%63%6f%6e%73%6f%6c%65%2e%6c%6f%67%28%60%63%72%65%61%74%65%64%20%62%79%20%69%6d%62%62%63%74%6f%6f%60%29'));
+
+	clapping.startSound = new lime.audio.Audio('assets/moveout.mp3');
 
 	clapping.director = new lime.Director(document.body, 320, 460);
 	clapping.director.makeMobileWebAppCapable();
@@ -67,7 +70,7 @@ clapping.start = function() {
 	clapping.game3 = new clapping.Game(3);
 
 	var btn = new lime.GlossyButton('PLAY').setSize(100, 40).setPosition(0, 50);
-	goog.events.listen(btn, 'click', function() {
+	goog.events.listen(btn, ['mousedown', 'touchstart'], function() {
 		var scene = new lime.Scene(),
 		layer = new lime.Layer().setPosition(160, 230);
 

@@ -170,7 +170,7 @@ clapping.Game = function(myMode) {
 		this.timer.stop();
 	}, false, this);
 
-	goog.events.listen(this.unit[0], ['touchstart', 'mousedown'], function() {
+	goog.events.listen(this.unit[0], ['mousedown', 'touchstart'], function() {
 		if (this.started && !this.timer.enabled && this.myBullet < 8) {
 			this.ai();
 			this.reload(this.lbl1);
@@ -178,7 +178,7 @@ clapping.Game = function(myMode) {
 			this.timer.start();
 		}
 	}, false, this);
-	goog.events.listen(this.unit[1], ['touchstart', 'mousedown'], function() {
+	goog.events.listen(this.unit[1], ['mousedown', 'touchstart'], function() {
 		if (this.started && !this.timer.enabled && this.myBullet > 0) {
 			this.ai();
 			this.fire(this.lbl1);
@@ -186,7 +186,7 @@ clapping.Game = function(myMode) {
 			this.timer.start();
 		}
 	}, false, this);
-	goog.events.listen(this.unit[2], ['touchstart', 'mousedown'], function() {
+	goog.events.listen(this.unit[2], ['mousedown', 'touchstart'], function() {
 		if (this.started && !this.timer.enabled) {
 			this.ai();
 			this.defend(this.lbl1);
@@ -194,7 +194,7 @@ clapping.Game = function(myMode) {
 			this.timer.start();
 		}
 	}, false, this);
-	goog.events.listen(this.unit[3], ['touchstart', 'mousedown'], function() {
+	goog.events.listen(this.unit[3], ['mousedown', 'touchstart'], function() {
 		if (this.started && !this.timer.enabled && this.myBullet >= 5) {
 			this.ai();
 			this.bomb(this.lbl1);
@@ -202,7 +202,7 @@ clapping.Game = function(myMode) {
 			this.timer.start();
 		}
 	}, false, this);
-	goog.events.listen(this.unit[4], ['touchstart', 'mousedown'], function() {
+	goog.events.listen(this.unit[4], ['mousedown', 'touchstart'], function() {
 		if (this.started && !this.timer.enabled) {
 			this.ai();
 			this.disarm(this.lbl1);
@@ -210,7 +210,7 @@ clapping.Game = function(myMode) {
 			this.timer.start();
 		}
 	}, false, this);
-	goog.events.listen(this.unit[5], ['touchstart', 'mousedown'], function() {
+	goog.events.listen(this.unit[5], ['mousedown', 'touchstart'], function() {
 		if (this.started && !this.timer.enabled && this.myBullet >= 5) {
 			this.ai();
 			if (myMode == 0) {
@@ -289,13 +289,13 @@ clapping.Game = function(myMode) {
 	this.appendChild(this.hint.setHidden(this.started).setPosition(-100, 160));
 
 	this.button1 = new lime.GlossyButton('REPLAY').setSize(80, 40);
-	goog.events.listen(this.button1, 'click', function() {
+	goog.events.listen(this.button1, ['mousedown', 'touchstart'], function() {
 		this.renew(1);
 	}, false, this);
 	this.appendChild(this.button1.setPosition(-100, 160));
 
 	this.back = new clapping.Back();
-	goog.events.listen(this.back.btn, 'click', function() {
+	goog.events.listen(this.back.btn, ['mousedown', 'touchstart'], function() {
 		if (!clapping.timer.enabled) {
 			this.renew();
 		}
@@ -2885,8 +2885,8 @@ clapping.Game.prototype.endGame = function(val) {
 		clapping.myScore -= this.round;
 		this.notice.lbl1.setText('You lose!');
 	}
-	clapping.myScore = (clapping.myScore < 0 ? 0 : clapping.myScore);
-	var bScore = clapping.getCookie('myScore');
+	clapping.myScore = parseInt(clapping.myScore < 0 ? 0 : clapping.myScore);
+	var bScore = parseInt(clapping.getCookie('myScore'));
 	if (bScore != null && bScore != '') {
 		bScore = (bScore > clapping.myScore ? bScore : clapping.myScore);
 	} else {

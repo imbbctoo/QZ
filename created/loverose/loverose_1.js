@@ -3,7 +3,7 @@ goog.provide('loverose.Function');
 goog.require('lime.Layer');
 
 loverose.Function = function() {
-	lime.Sprite.call(this);
+	lime.Layer.call(this);
 
 	this.x = [];
 	this.y = [];

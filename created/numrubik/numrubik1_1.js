@@ -317,7 +317,7 @@ numrubik.Game44.prototype.combatRun = function(val) {
 		this.lbl1.runAction(new lime.animation.ScaleTo(1).setDuration(.2));
 		this.lbl2.runAction(new lime.animation.ScaleTo(1).setDuration(.2));
 
-		var bt44 = numrubik.getCookie('bt44');
+		var bt44 = parseInt(numrubik.getCookie('bt44'));
 		if (bt44 != null && bt44 != '') {
 			bt44 = (bt44 < this.n ? bt44 : this.n);
 		} else {
@@ -325,7 +325,7 @@ numrubik.Game44.prototype.combatRun = function(val) {
 		}
 		numrubik.setCookie('bt44', bt44, 365);
 
-		var bm44 = numrubik.getCookie('bm44');
+		var bm44 = parseInt(numrubik.getCookie('bm44'));
 		if (bm44 != null && bm44 != '') {
 			bm44 = (bm44 < parseInt(this.lbl2.getText()) ? bm44 : parseInt(this.lbl2.getText()));
 		} else {

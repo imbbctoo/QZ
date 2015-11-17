@@ -1,0 +1,24 @@
+CACHE MANIFEST
+
+# If you use more files you need to manually list them here.
+# Don't remove next line
+# Updated on: 2015-11-14 20:59:49
+
+drumset_c.js
+assets/startup.jpg
+assets/startup_ipad.jpg
+assets/icon.png
+assets/t3.mp3
+assets/t2.mp3
+assets/t1.mp3
+assets/ldt.mp3
+assets/kc.mp3
+assets/jg.mp3
+assets/gb.mp3
+assets/ddc.mp3
+assets/dc.mp3
+assets/bc.mp3
+assets/drumset.png
+
+NETWORK:
+*

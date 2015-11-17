@@ -18,8 +18,7 @@ goog.require('lime.fill.LinearGradient');
 blackjack.Game = function(myMode) {
 	lime.Sprite.call(this);
 
-	this.setSize(322, 462);
-	this.setFill(0, 0, 0);
+	this.setSize(322, 462).setFill(0, 0, 0);
 
 	var w = 430;
 	var h = 550;
@@ -38,35 +37,41 @@ blackjack.Game = function(myMode) {
 	this.timer[1] = new goog.Timer();
 	this.timer[2] = new goog.Timer();
 	this.timer[3] = new goog.Timer(900);
+	this.timer[4] = new goog.Timer(300);
 	this.timer[0].stop();
 	this.timer[1].start();
 	this.timer[2].start();
 	this.timer[3].stop();
+	this.timer[4].stop();
 
 	goog.events.listen(this.timer[3], 'tick', function() {
-		if (parseInt(this.p_d.number.getText()) >= 17) {
+		if (parseInt(this.p[1].number.getText()) >= 17) {
 			this.timer[3].stop();
 			this.notice.runAction(new lime.animation.FadeTo(1));
 			return;
 		}
-		this.draw(this.layer[1], this.p_d, this.timer[1], 0, 0);
+		this.draw(1, 0);
 	}, false, this);
 
-	this.p_p = new blackjack.Scoreboard(0);
-	this.appendChild(this.p_p.setPosition(0, -25));
+	this.p = [];
 
-	this.p_d = new blackjack.Scoreboard(0);
-	this.appendChild(this.p_d.setPosition(0, -55));
+	this.p[2] = new blackjack.Scoreboard(0);
+	this.appendChild(this.p[2].setPosition(0, -25));
 
-	this.c_p = new blackjack.Scoreboard();
-	this.c_p.label.setText('PLAYER');
-	this.c_p.number.setText(200);
-	this.appendChild(this.c_p.setPosition(114, -200));
+	this.p[1] = new blackjack.Scoreboard(0);
+	this.appendChild(this.p[1].setPosition(0, -55));
 
-	this.c_d = new blackjack.Scoreboard();
-	this.c_d.label.setText('DEALER');
-	this.c_d.number.setText(200);
-	this.appendChild(this.c_d.setPosition(-114, -200));
+	this.c = [];
+
+	this.c[2] = new blackjack.Scoreboard();
+	this.c[2].label.setText('PLAYER');
+	this.c[2].number.setText(200);
+	this.appendChild(this.c[2].setPosition(114, -200));
+
+	this.c[1] = new blackjack.Scoreboard();
+	this.c[1].label.setText('DEALER');
+	this.c[1].number.setText(200);
+	this.appendChild(this.c[1].setPosition(-114, -200));
 
 	this.rounds = new blackjack.Scoreboard();
 	this.rounds.label.setText('ROUNDS');
@@ -113,8 +118,8 @@ blackjack.Game = function(myMode) {
 				new lime.animation.ScaleTo(1).setDuration(.1)
 			));
 			this.chip.l.setText(parseInt(this.chip.l.getText()) + 1);
-			this.c_p.number.setText(parseInt(this.c_p.number.getText()) - 1);
-			this.c_d.number.setText(parseInt(this.c_d.number.getText()) - 1);
+			this.c[2].number.setText(parseInt(this.c[2].number.getText()) - 1);
+			this.c[1].number.setText(parseInt(this.c[1].number.getText()) - 1);
 		}
 	}, false, this);
 
@@ -127,10 +132,15 @@ blackjack.Game = function(myMode) {
 			this.timer[1].start();
 			this.layer[4].runAction(new lime.animation.MoveTo(0, 160).setDuration(.3));
 			this.layer[3].runAction(new lime.animation.MoveTo(0, 350).setDuration(.3));
-			this.draw(this.layer[2], this.p_p, this.timer[1], 0, 0);
-			this.draw(this.layer[2], this.p_p, this.timer[1], 300, 0);
-			this.draw(this.layer[1], this.p_d, this.timer[1], 600, 0);
-			this.draw(this.layer[1], this.p_d, this.timer[1], 900);
+			this.timer[4].start();
+			var k = 0;
+			goog.events.listen(this.timer[4], 'tick', function() {
+				if (k == 0) this.draw(2, 0);
+				if (k == 1) this.draw(2, 0);
+				if (k == 2) this.draw(1, 0);
+				if (k == 3) this.draw(1, 1);
+				k++;
+			}, false, this);
 			this.chip.stop(1);
 			this.rounds.number.setText(parseInt(this.rounds.number.getText()) + 1);
 		}
@@ -141,7 +151,7 @@ blackjack.Game = function(myMode) {
 
 	goog.events.listen(this.hit, ['mousedown', 'touchstart'], function() {
 		if (!this.timer[1].enabled && parseInt(this.cards.number.getText()) > 9) {
-			this.draw(this.layer[2], this.p_p, this.timer[1], 0, 0);
+			this.draw(2, 0);
 		}
 	}, false, this);
 
@@ -152,10 +162,17 @@ blackjack.Game = function(myMode) {
 		if (!this.timer[1].enabled) {
 			this.timer[1].start();
 			this.timer[2].stop();
-			this.n = 0;
-			this.layer[1].getChildAt(1).back.setOpacity(0);
-			this.p_d.number.setText(parseInt(this.p_d.number.getText()) + parseInt(this.layer[1].getChildAt(1).number2));
 			this.timer[3].start();
+			this.layer[1].getChildAt(1).back.setOpacity(0);
+
+			this.p[1].number.setText(parseInt(this.p[1].number.getText()) + parseInt(this.layer[1].getChildAt(1).number2));
+
+			with (this.layer[1].getChildAt(1)) {
+				if (number1 == 'A' && flower == '%u2660' && this.flag[0]) this.calculate(0, 1, 0);
+				if (number1 == 'A' && flower == '%u2663' && this.flag[1]) this.calculate(1, 1, 0);
+				if (number1 == 'A' && flower == '%u2665' && this.flag[2]) this.calculate(2, 1, 0);
+				if (number1 == 'A' && flower == '%u2666' && this.flag[3]) this.calculate(3, 1, 0);
+			}
 		}
 	}, false, this);
 
@@ -177,10 +194,10 @@ blackjack.Game = function(myMode) {
 goog.inherits(blackjack.Game, lime.Sprite);
 
 blackjack.Game.prototype.newRound = function() {
-	this.p_p.number.setText(0);
-	this.p_d.number.setText(0);
-	this.c_p.number.setText(parseInt(this.c_p.number.getText()) - 1);
-	this.c_d.number.setText(parseInt(this.c_d.number.getText()) - 1);
+	this.p[2].number.setText(0);
+	this.p[1].number.setText(0);
+	this.c[2].number.setText(parseInt(this.c[2].number.getText()) - 1);
+	this.c[1].number.setText(parseInt(this.c[1].number.getText()) - 1);
 	this.chip.l.setText(1);
 	this.chip.anime.play();
 	this.layer[3].runAction(new lime.animation.MoveTo(0, 160).setDuration(.3));
@@ -208,34 +225,42 @@ blackjack.Game.prototype.newRound = function() {
 blackjack.Game.prototype.newGame = function() {
 	this.newRound();
 	this.shuffle();
+	//this.a = [0, 18, 5, 26, 2, 51, 50, 49, 48];
 };
 
-blackjack.Game.prototype.draw = function(layer, sheet1, timer, time, val) {
+blackjack.Game.prototype.draw = function(num, val) {
+	//var index = this.a[this.a.length - 1];
+	//this.a.pop();
 	var index = parseInt(Math.random() * this.card_u.length);
 	var card = this.card_u[index];
 	this.card_u[index] = this.card_u[this.card_u.length - 1];
 	this.card_u.pop();
-	var sheet2 = this.cards;
-	setTimeout(function() {
-		var number = layer.getNumberOfChildren() + 1;
-		layer.appendChild(card.setPosition(number * 25, -350));
-		var anime = new lime.animation.MoveTo(number * 25, 0).setDuration(.3);
-		card.runAction(anime);
-		goog.events.listen(anime, 'stop', function() {
-			card.back.setOpacity(val);
-			if (val == null) timer.stop();
-		});
-		var x1 = layer.getChildAt(0).getPosition().x;
-		var x2 = layer.getChildAt(number - 1).getPosition().x;
-		layer.runAction(new lime.animation.MoveTo(-(x1 + x2) / 2, layer.getPosition().y).setDuration(.3));
-		if (val == 0) sheet1.number.setText(parseInt(sheet1.number.getText()) + parseInt(layer.getChildAt(layer.getNumberOfChildren() - 1).number2));
-		//for (var i = 0; i < layer.getNumberOfChildren(); i++) {
-		//	if (parseInt(layer.getChildAt(i).number2) == 11) {
-		//		console.log(i)
-		//	}
-		//}
-		sheet2.number.setText(parseInt(sheet2.number.getText()) - 1);
-	}, time);
+
+	var number = this.layer[num].getNumberOfChildren() + 1;
+	this.layer[num].appendChild(card.setPosition(number * 25, -350));
+
+	var x1 = this.layer[num].getChildAt(0).getPosition().x;
+	var x2 = this.layer[num].getChildAt(number - 1).getPosition().x;
+	this.layer[num].runAction(new lime.animation.MoveTo(-(x1 + x2) / 2, this.layer[num].getPosition().y).setDuration(.3));
+
+	if (val == 0) this.p[num].number.setText(parseInt(this.p[num].number.getText()) + parseInt(this.layer[num].getChildAt(this.layer[num].getNumberOfChildren() - 1).number2));
+
+	var anime = new lime.animation.MoveTo(number * 25, 0).setDuration(.3);
+	card.runAction(anime);
+	goog.events.listen(anime, 'stop', function() {
+		card.back.setOpacity(val);
+		if (val == 1) this.timer[1].stop();
+	}, false, this);
+	this.cards.number.setText(parseInt(this.cards.number.getText()) - 1);
+
+	for (var i = 0; i < this.layer[num].getNumberOfChildren(); i++) {
+		with (this.layer[num].getChildAt(i)) {
+			if (number1 == 'A' && flower == '%u2660' && this.flag[0]) this.calculate(0, num, val);
+			if (number1 == 'A' && flower == '%u2663' && this.flag[1]) this.calculate(1, num, val);
+			if (number1 == 'A' && flower == '%u2665' && this.flag[2]) this.calculate(2, num, val);
+			if (number1 == 'A' && flower == '%u2666' && this.flag[3]) this.calculate(3, num, val);
+		}
+	}
 };
 
 blackjack.Game.prototype.shuffle = function() {
@@ -244,4 +269,17 @@ blackjack.Game.prototype.shuffle = function() {
 		this.card_u[i] = this.card_b[i];
 	}
 	this.cards.number.setText(52);
+	this.flag = [];
+	for (var i = 0; i < 4; i++) this.flag[i] = true;
+};
+
+blackjack.Game.prototype.calculate = function(index, num, val) {
+	if (val == 0) this.flag[index] = false;
+	var points = parseInt(this.p[num].number.getText());
+	if (points > 21) points -= 10;
+	this.p[num].number.setText(points);
+};
+
+blackjack.Game.prototype.judge = function(num) {
+
 };

@@ -222,7 +222,7 @@ numrubik.Game33.prototype.combatRun = function(val) {
 		this.lbl1.runAction(new lime.animation.ScaleTo(1).setDuration(.2));
 		this.lbl2.runAction(new lime.animation.ScaleTo(1).setDuration(.2));
 
-		var bt33 = numrubik.getCookie('bt33');
+		var bt33 = parseInt(numrubik.getCookie('bt33'));
 		if (bt33 != null && bt33 != '') {
 			bt33 = (bt33 < this.n ? bt33 : this.n);
 		} else {
@@ -230,7 +230,7 @@ numrubik.Game33.prototype.combatRun = function(val) {
 		}
 		numrubik.setCookie('bt33', bt33, 365);
 
-		var bm33 = numrubik.getCookie('bm33');
+		var bm33 = parseInt(numrubik.getCookie('bm33'));
 		if (bm33 != null && bm33 != '') {
 			bm33 = (bm33 < parseInt(this.lbl2.getText()) ? bm33 : parseInt(this.lbl2.getText()));
 		} else {
