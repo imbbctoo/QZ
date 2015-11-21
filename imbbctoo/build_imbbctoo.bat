@@ -1,0 +1,1 @@
+python ../bin/lime.py build imbbctoo -o ../imbbctoo_c/imbbctoo_c.js -a -p imbbctoo.start

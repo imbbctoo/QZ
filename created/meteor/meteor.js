@@ -1,5 +1,6 @@
 goog.provide('meteor');
 
+goog.require('lime.Circle');
 goog.require('lime.Director');
 goog.require('lime.Label');
 goog.require('lime.Layer');
@@ -19,7 +20,7 @@ meteor.start = function() {
 	var style = document.createElement('style');
 	style.type = 'text/css';
 
-	var css = '*{margin:0 auto;padding:0 auto;}body{background:black;overflow:hidden;}';
+	var css = 'body{background:black;overflow:hidden;}';
 
 	style.appendChild(document.createTextNode(css));
 
@@ -28,66 +29,54 @@ meteor.start = function() {
 	var director = new lime.Director(document.body, 320, 500);
 	var scene = new lime.Scene();
 	var layerx = new lime.Layer();
-	scene.appendChild(layerx.setPosition(160, -250));
-	var layer3 = new lime.Layer();
-	layerx.appendChild(layer3.setPosition(160, 250));
-	var layer4 = new lime.Layer().setRotation(10);
-	layerx.appendChild(layer4.setPosition(160, 250));
-	var layer5 = new lime.Layer().setRotation(20);
-	layerx.appendChild(layer5.setPosition(160, 250));
-	var layer6 = new lime.Layer().setRotation(30);
-	layerx.appendChild(layer6.setPosition(160, 250));
+	scene.appendChild(layerx.setPosition(160, -250).setRotation(-10));
+	var layer = [];
+	layer[0] = new lime.Layer();
+	layerx.appendChild(layer[0].setPosition(160, 250));
+	layer[1] = new lime.Layer().setRotation(-10);
+	layerx.appendChild(layer[1].setPosition(140, 250));
+	layer[2] = new lime.Layer().setRotation(-20);
+	layerx.appendChild(layer[2].setPosition(120, 250));
+	layer[3] = new lime.Layer().setRotation(-30);
+	layerx.appendChild(layer[3].setPosition(100, 250));
+	layer[4] = new lime.Layer().setRotation(-40);
+	layerx.appendChild(layer[4].setPosition(80, 250));
 
 	director.makeMobileWebAppCapable();
-
-	function encode(value) {
-		return unescape(value.replace(/&#x/g, '%u').replace(/;/g, ''));
-	}
-
-	var name1 = 0;
-	if (flag1) {
-		var name1 = encode('&#x540D;&#x5B57;');
-	}
 
 	var a = 160;
 	var b = 120;
 
 	var color1 = '#ff0';
 
-	var x = 160;
+	var x = [];
+	for (var i = 0; i < 5; i++) x[i] = 50 + Math.random() * 600;
 
 	function step1() {
 		var a = 160;
 		var b = 120;
 
-		var l1 = new lime.Label().setText(name1).setFontSize(12 * a / b).setFontColor(color1).setSize(320, 12);
-		var l2 = new lime.Label().setText(name1).setFontSize(12 * a / b).setFontColor(color1).setSize(320, 12);
-		var l3 = new lime.Label().setText(name1).setFontSize(12 * a / b).setFontColor(color1).setSize(320, 12);
-		var l4 = new lime.Label().setText(name1).setFontSize(12 * a / b).setFontColor(color1).setSize(320, 12);
-		x < -320 ? x = 160 : x -= 10;
-		var y = 1.5625 * x;
-		layer3.appendChild(l1.setPosition(x, -y).setOpacity(0).setFontSize((Math.random() * 4 + 12) * a / b));
-		layer4.appendChild(l2.setPosition(x, -y).setOpacity(0).setFontSize((Math.random() * 4 + 12) * a / b));
-		layer5.appendChild(l3.setPosition(x, -y).setOpacity(0).setFontSize((Math.random() * 4 + 12) * a / b));
-		layer6.appendChild(l4.setPosition(x, -y).setOpacity(0).setFontSize((Math.random() * 4 + 12) * a / b));
+		var l = [];
+
 		var anime = new lime.animation.Sequence(
-			new lime.animation.FadeTo(1).setDuration(1),
-			new lime.animation.FadeTo(0).setDuration(1)
+			new lime.animation.FadeTo(1).setDuration(.1),
+			new lime.animation.FadeTo(0).setDuration(2)
 		);
-		anime.addTarget(l1);
-		anime.addTarget(l2);
-		anime.addTarget(l3);
-		anime.addTarget(l4);
+		for (var i = 0; i < 5; i++) {
+			var r = 50 + Math.random() * 600;
+			var rr = (10 - x[i] / 40) * a / b;
+			l[i] = new lime.Circle().setFill(color1);
+			x[i] < -600 ? x[i] = r : x[i] -= 11;
+			layer[i].appendChild(l[i].setPosition(0, -x[i]).setOpacity(0).setSize(rr, rr));
+			anime.addTarget(l[i]);
+		}
 		goog.events.listen(anime, 'stop', function() {
-			layer3.removeChild(l1);
-			layer4.removeChild(l2);
-			layer5.removeChild(l3);
-			layer6.removeChild(l4);
+			for (var i = 0; i < 5; i++) layer[i].removeChild(l[i]);
 		});
 		anime.play();
 	}
 
-	setInterval(step1, 30);
+	setInterval(step1, 20);
 
 	scene.appendChild(new lime.Sprite().setSize(960, 1500).setFill(0, 0, 0).setOpacity(.1));
 

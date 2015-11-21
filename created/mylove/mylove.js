@@ -21,7 +21,7 @@ mylove.start = function() {
 	var style = document.createElement('style');
 	style.type = 'text/css';
 
-	var css = '*{margin:0 auto;padding:0 auto;}body{background:black;overflow:hidden;}h1{text-align:center;color:green;text-transform:uppercase;}';
+	var css = 'body{background:black;overflow:hidden;}';
 
 	style.appendChild(document.createTextNode(css));
 
