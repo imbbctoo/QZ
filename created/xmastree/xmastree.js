@@ -4,7 +4,8 @@ goog.require('lime.Director');
 goog.require('lime.Scene');
 
 xmastree.start = function() {
-	eval(unescape('%63%6f%6e%73%6f%6c%65%2e%6c%6f%67%28%60%63%72%65%61%74%65%64%20%62%79%20%69%6d%62%62%63%74%6f%6f%60%29'));
+	console.log('created by imbbctoo');
+	//eval(unescape('%63%6f%6e%73%6f%6c%65%2e%6c%6f%67%28%60%63%72%65%61%74%65%64%20%62%79%20%69%6d%62%62%63%74%6f%6f%60%29'));
 
 	var head = document.getElementsByTagName('head')[0];
 

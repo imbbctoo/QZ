@@ -167,12 +167,10 @@ blackjack.Game = function(myMode) {
 
 			this.p[1].number.setText(parseInt(this.p[1].number.getText()) + parseInt(this.layer[1].getChildAt(1).number2));
 
-			with (this.layer[1].getChildAt(1)) {
-				if (number1 == 'A' && flower == '%u2660' && this.flag[0]) this.calculate(0, 1, 0);
-				if (number1 == 'A' && flower == '%u2663' && this.flag[1]) this.calculate(1, 1, 0);
-				if (number1 == 'A' && flower == '%u2665' && this.flag[2]) this.calculate(2, 1, 0);
-				if (number1 == 'A' && flower == '%u2666' && this.flag[3]) this.calculate(3, 1, 0);
-			}
+			if (this.layer[1].getChildAt(1).number1 == 'A' && this.layer[1].getChildAt(1).flower == '%u2660' && this.flag[0]) this.calculate(0, 1, 0);
+			if (this.layer[1].getChildAt(1).number1 == 'A' && this.layer[1].getChildAt(1).flower == '%u2663' && this.flag[1]) this.calculate(1, 1, 0);
+			if (this.layer[1].getChildAt(1).number1 == 'A' && this.layer[1].getChildAt(1).flower == '%u2665' && this.flag[2]) this.calculate(2, 1, 0);
+			if (this.layer[1].getChildAt(1).number1 == 'A' && this.layer[1].getChildAt(1).flower == '%u2666' && this.flag[3]) this.calculate(3, 1, 0);
 		}
 	}, false, this);
 
@@ -254,12 +252,10 @@ blackjack.Game.prototype.draw = function(num, val) {
 	this.cards.number.setText(parseInt(this.cards.number.getText()) - 1);
 
 	for (var i = 0; i < this.layer[num].getNumberOfChildren(); i++) {
-		with (this.layer[num].getChildAt(i)) {
-			if (number1 == 'A' && flower == '%u2660' && this.flag[0]) this.calculate(0, num, val);
-			if (number1 == 'A' && flower == '%u2663' && this.flag[1]) this.calculate(1, num, val);
-			if (number1 == 'A' && flower == '%u2665' && this.flag[2]) this.calculate(2, num, val);
-			if (number1 == 'A' && flower == '%u2666' && this.flag[3]) this.calculate(3, num, val);
-		}
+		if (this.layer[num].getChildAt(i).number1 == 'A' && this.layer[num].getChildAt(i).flower == '%u2660' && this.flag[0]) this.calculate(0, num, val);
+		if (this.layer[num].getChildAt(i).number1 == 'A' && this.layer[num].getChildAt(i).flower == '%u2663' && this.flag[1]) this.calculate(1, num, val);
+		if (this.layer[num].getChildAt(i).number1 == 'A' && this.layer[num].getChildAt(i).flower == '%u2665' && this.flag[2]) this.calculate(2, num, val);
+		if (this.layer[num].getChildAt(i).number1 == 'A' && this.layer[num].getChildAt(i).flower == '%u2666' && this.flag[3]) this.calculate(3, num, val);
 	}
 };
 

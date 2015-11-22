@@ -9,6 +9,8 @@ goog.require('lime.Sprite');
 goog.require('lime.fill.LinearGradient');
 
 imbbctoo.start = function() {
+	console.log('created by imbbctoo');
+
 	var head = document.getElementsByTagName('head')[0];
 
 	var style = document.createElement('style');
@@ -30,7 +32,7 @@ imbbctoo.start = function() {
 		layer[i] = new lime.Layer();
 		scene[i].appendChild(new lime.Sprite().setSize(400, 500).setFill(new lime.fill.LinearGradient().addColorStop(0, '#34c').addColorStop(1, '#0ae')).setPosition(160, 230));
 		scene[i].appendChild(layer[i].setPosition(17.5, 60));
-		scene[i].appendChild(new lime.Label().setText('WELCOME TO MY WORLD!').setFontColor('#fff').setFontSize(20).setPosition(160, 35));
+		scene[i].appendChild(new lime.Label().setText('WELCOME TO MY WORLD!').setFontColor('#fff').setFontSize(20).setPosition(160, 35).setSize(400, 12));
 	}
 
 	director.makeMobileWebAppCapable();
@@ -41,7 +43,7 @@ imbbctoo.start = function() {
 	name[0] = ['coloroids', 'numrubik', 'blackbox', 'clapping', 'dung2048'];
 
 	manage(name[0], layer[0]);
-	
+
 	function manage(name, layer) {
 		var a = [];
 		for (var i = 0; i < parseInt(name.length / 4) + 1; i++) {
