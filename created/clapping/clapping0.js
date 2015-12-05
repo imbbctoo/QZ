@@ -7,6 +7,8 @@ goog.require('lime.Scene');
 clapping.Menu = function() {
 	lime.Layer.call(this);
 
+	this.appendChild(new lime.Sprite().setSize(clapping.director.getSize().width, clapping.director.getSize().height).setFill(255, 255, 255));
+
 	this.sniper = new lime.GlossyButton('Sniper').setSize(100, 40).setPosition(0, -90);
 	this.surgeon = new lime.GlossyButton('Surgeon').setSize(100, 40).setPosition(0, -30);
 	this.grenadier = new lime.GlossyButton('Grenadier').setSize(100, 40).setPosition(0, 30);
@@ -16,8 +18,8 @@ clapping.Menu = function() {
 		clapping.startSound.stop();
 		clapping.startSound.play();
 
-		var scene = new lime.Scene(),
-		layer = new lime.Layer().setPosition(160, 230);
+		var scene = new lime.Scene();
+		var layer = new lime.Layer().setPosition(clapping.director.getSize().width / 2, clapping.director.getSize().height / 2);
 
 		scene.appendChild(layer);
 
@@ -38,8 +40,8 @@ clapping.Menu = function() {
 		clapping.startSound.stop();
 		clapping.startSound.play();
 
-		var scene = new lime.Scene(),
-		layer = new lime.Layer().setPosition(160, 230);
+		var scene = new lime.Scene();
+		var layer = new lime.Layer().setPosition(clapping.director.getSize().width / 2, clapping.director.getSize().height / 2);
 
 		scene.appendChild(layer);
 
@@ -60,8 +62,8 @@ clapping.Menu = function() {
 		clapping.startSound.stop();
 		clapping.startSound.play();
 
-		var scene = new lime.Scene(),
-		layer = new lime.Layer().setPosition(160, 230);
+		var scene = new lime.Scene();
+		var layer = new lime.Layer().setPosition(clapping.director.getSize().width / 2, clapping.director.getSize().height / 2);
 
 		scene.appendChild(layer);
 
@@ -82,8 +84,8 @@ clapping.Menu = function() {
 		clapping.startSound.stop();
 		clapping.startSound.play();
 
-		var scene = new lime.Scene(),
-		layer = new lime.Layer().setPosition(160, 230);
+		var scene = new lime.Scene();
+		var layer = new lime.Layer().setPosition(clapping.director.getSize().width / 2, clapping.director.getSize().height / 2);
 
 		scene.appendChild(layer);
 

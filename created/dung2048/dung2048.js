@@ -1,7 +1,7 @@
 goog.provide('dung2048');
 
 goog.require('dung2048.Game');
-goog.require('dung2048.Lime');
+goog.require('imbbctoo.Lime');
 goog.require('lime.Director');
 goog.require('lime.Label');
 goog.require('lime.Layer');
@@ -28,14 +28,18 @@ dung2048.start = function() {
 	dung2048.btn = new Image();
 	dung2048.btn.src = 'assets/shuffle.png';
 
-	dung2048.director = new lime.Director(document.body, 320, 460);
+	var w = 320;
+	var h = window.innerHeight / window.innerWidth * w;
+	h = h < 460 ? 460 : h;
+
+	dung2048.director = new lime.Director(document.body, w, h);
 	dung2048.director.makeMobileWebAppCapable();
 
-	dung2048.lime = new dung2048.Lime();
+	dung2048.lime = new imbbctoo.Lime(dung2048.director.getSize().width / 2, dung2048.director.getSize().height - 40);
 
 	var scene = new lime.Scene();
 
-	var layer = new lime.Layer().setPosition(160, 230);
+	var layer = new lime.Layer().setPosition(dung2048.director.getSize().width / 2, dung2048.director.getSize().height / 2);
 	scene.appendChild(layer);
 
 	layer.appendChild(new lime.Label().setSize(320, 12).setFontSize(50).setText('Dung2048').setPosition(0, -140));
@@ -53,7 +57,7 @@ dung2048.start = function() {
 	layer.appendChild(tap);
 
 	var tapHere = new lime.Label().setSize(320, 12).setText('Tap to start').setFontSize(20);
-	var shelter = new lime.Sprite().setSize(320, 460).setFill(255, 255, 255).setOpacity(.1);
+	var shelter = new lime.Sprite().setSize(dung2048.director.getSize().width, dung2048.director.getSize().height).setFill(255, 255, 255).setOpacity(.1);
 	tap.appendChild(tapHere.setPosition(0, 50));
 	tap.appendChild(shelter);
 
@@ -70,7 +74,7 @@ dung2048.start = function() {
 
 	goog.events.listen(tap, ['mousedown', 'touchstart'], function() {
 		var scene = new lime.Scene(),
-		layer = new lime.Layer().setPosition(160, 230);
+		layer = new lime.Layer().setPosition(dung2048.director.getSize().width / 2, dung2048.director.getSize().height / 2);
 
 		scene.appendChild(layer);
 

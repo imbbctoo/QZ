@@ -17,8 +17,8 @@ goog.require('lime.fill.LinearGradient');
 blackbox.Game = function() {
 	lime.Sprite.call(this);
 
-	this.w = 320;
-	this.h = 460;
+	this.w = blackbox.director.getSize().width;
+	this.h = blackbox.director.getSize().height;
 	this.setSize(this.w, this.h).setAnchorPoint(.5, .5);
 
 	var back = new lime.fill.LinearGradient().addColorStop(0, '#bbb').addColorStop(1, '#DDD');
@@ -222,8 +222,8 @@ blackbox.Game = function() {
 	this.button3 = new lime.GlossyButton('UNLOCK').setSize(80, 40);
 	goog.events.listen(this.button3, 'click', function() {
 		if (!timer2.enabled) {
-			this.cheat = true;
 			if (this.mixed && this.s > this.l) {
+				this.cheat = true;
 				for (var i = 0; i < 4; i++) {
 					this.key[i].setOpacity(.5);
 				}

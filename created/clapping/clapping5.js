@@ -12,7 +12,7 @@ clapping.Back = function() {
 
 	goog.events.listen(this.btn, 'click', function() {
 		var scene = new lime.Scene(),
-		layer = new lime.Layer().setPosition(160, 230);
+		layer = new lime.Layer().setPosition(clapping.director.getSize().width / 2, clapping.director.getSize().height / 2);
 
 		scene.appendChild(layer);
 

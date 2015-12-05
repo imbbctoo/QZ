@@ -1,5 +1,6 @@
 goog.provide('loverose');
 
+goog.require('lime.Circle');
 goog.require('lime.Director');
 goog.require('lime.Label');
 goog.require('lime.Layer');
@@ -39,6 +40,19 @@ loverose.start = function() {
 
 	var director = new lime.Director(document.body, 320, 500);
 	var scene = new lime.Scene();
+	var layerx = new lime.Layer();
+	scene.appendChild(layerx.setPosition(160, -250).setRotation(-10));
+	var layer = [];
+	layer[0] = new lime.Layer();
+	layerx.appendChild(layer[0].setPosition(160, 250));
+	layer[1] = new lime.Layer().setRotation(-10);
+	layerx.appendChild(layer[1].setPosition(140, 250));
+	layer[2] = new lime.Layer().setRotation(-20);
+	layerx.appendChild(layer[2].setPosition(120, 250));
+	layer[3] = new lime.Layer().setRotation(-30);
+	layerx.appendChild(layer[3].setPosition(100, 250));
+	layer[4] = new lime.Layer().setRotation(-40);
+	layerx.appendChild(layer[4].setPosition(80, 250));
 	var layer1 = new lime.Layer();
 	scene.appendChild(layer1.setPosition(160 + 51, 250 + 30));
 	var layer2 = new lime.Layer();
@@ -105,9 +119,7 @@ loverose.start = function() {
 		anime.play();
 	});
 
-	function step1() {
-		var a = 80;
-		var b = 120;
+	function step1(a, b) {
 		if (mode == 1) {
 			var l1 = new lime.Label().setText(name1).setFontSize(12 * a / b).setFontColor(color1).setSize(320, 12);
 			var l2 = new lime.Label().setText(name1).setFontSize(12 * a / b).setFontColor(color2).setSize(320, 12);
@@ -124,7 +136,7 @@ loverose.start = function() {
 		layer1.appendChild(l2.setPosition(x, -y2).setOpacity(0).setFontSize((Math.random() * 6 + 21) * a / b));
 		var anime = new lime.animation.Sequence(
 			new lime.animation.FadeTo(1).setDuration(1),
-			new lime.animation.FadeTo(0).setDuration(7)
+			new lime.animation.FadeTo(0).setDuration(4)
 		);
 		anime.addTarget(l1);
 		anime.addTarget(l2);
@@ -134,8 +146,6 @@ loverose.start = function() {
 		});
 		anime.play();
 	}
-
-	setInterval(step1, 150);
 
 	var name2 = ['0', '1'];
 	if (flag2) {
@@ -149,13 +159,13 @@ loverose.start = function() {
 		var coordinate = new loverose.Function();
 		var r = parseInt(Math.random() * 21);
 		var l1 = new lime.Label().setText(name2[parseInt(Math.random() * 2)]).setFontSize(1).setFontColor(r < 4 ? color4 : color3).setSize(320, 12);
-		var a = 1;
-		var x = coordinate.x[r] * a;
-		var y = coordinate.y[r] * a;
+		var x = coordinate.x[r];
+		var y = coordinate.y[r];
 		layer2.appendChild(l1.setPosition(x, -y).setOpacity(0).setFontSize(Math.random() * 4 + 12));
 		var anime = new lime.animation.Sequence(
-			new lime.animation.FadeTo(1).setDuration(.5),
-			new lime.animation.FadeTo(0).setDuration(40)
+			new lime.animation.FadeTo(1).setDuration(1),
+			new lime.animation.Delay().setDuration(15),
+			new lime.animation.FadeTo(0).setDuration(1)
 		);
 		anime.addTarget(l1);
 		goog.events.listen(anime, 'stop', function() {
@@ -164,7 +174,36 @@ loverose.start = function() {
 		anime.play();
 	}
 
-	lime.scheduleManager.schedule(step2, this);
+	var color5 = '#ffa';
+
+	var x = [];
+	for (var i = 0; i < 5; i++) x[i] = 200 + Math.random() * 600;
+
+	function step3() {
+		var a = 160;
+		var b = 120;
+
+		var l = [];
+
+		var anime = new lime.animation.FadeTo(0).setDuration(2);
+
+		for (var i = 0; i < 5; i++) {
+			var r = 200 + Math.random() * 600;
+			var rr = (1 - x[i] / 100) * a / b;
+			l[i] = new lime.Circle().setFill(color5).setOpacity(.1);
+			x[i] < -600 ? x[i] = r : x[i] -= 10;
+			layer[i].appendChild(l[i].setPosition(0, -x[i]).setSize(rr, rr * 20));
+			anime.addTarget(l[i]);
+		}
+		goog.events.listen(anime, 'stop', function() {
+			for (var i = 0; i < 5; i++) layer[i].removeChild(l[i]);
+		});
+		anime.play();
+	}
+
+	setInterval(function() {step1(a, b);}, 150);
+	setInterval(step2, 25);
+	setInterval(step3, 50);
 
 	scene.appendChild(new lime.Sprite().setSize(960, 1500).setFill(0, 0, 0).setOpacity(.1));
 

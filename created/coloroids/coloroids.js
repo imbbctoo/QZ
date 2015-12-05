@@ -1,17 +1,13 @@
-//set main namespace
 goog.provide('coloroids');
 
-
-//get requirements
 goog.require('coloroids.Game');
-goog.require('coloroids.Lime');
+goog.require('imbbctoo.Lime');
 goog.require('lime.Director');
 goog.require('lime.GlossyButton');
 goog.require('lime.Layer');
 goog.require('lime.Scene');
 goog.require('lime.Sprite');
 
-// entrypoint
 coloroids.start = function() {
 	console.log('created by imbbctoo');
 
@@ -29,11 +25,11 @@ coloroids.start = function() {
 	coloroids.director = new lime.Director(document.body, 320, 460);
 	coloroids.director.makeMobileWebAppCapable();
 
-	coloroids.lime = new coloroids.Lime();
+	coloroids.lime = new imbbctoo.Lime(coloroids.director.getSize().width / 2, coloroids.director.getSize().height - 40);
 
 	var scene = new lime.Scene();
 
-	var layer = new lime.Layer().setPosition(160, 230);
+	var layer = new lime.Layer().setPosition(coloroids.director.getSize().width / 2, coloroids.director.getSize().height / 2);
 	scene.appendChild(layer);
 
 	layer.appendChild(new lime.Sprite().setSize(400, 500).setFill(255, 255, 255));
@@ -54,7 +50,7 @@ coloroids.start = function() {
 
 coloroids.newgame = function() {
 	var scene = new lime.Scene(),
-	layer = new lime.Layer().setPosition(160, 230);
+	layer = new lime.Layer().setPosition(coloroids.director.getSize().width / 2, coloroids.director.getSize().height / 2);
 
 	scene.appendChild(layer);
 
@@ -66,6 +62,4 @@ coloroids.newgame = function() {
 	coloroids.director.replaceScene(scene);
 };
 
-
-//this is required for outside access after code is compiled in ADVANCED_COMPILATIONS mode
 goog.exportSymbol('coloroids.start', coloroids.start);

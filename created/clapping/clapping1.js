@@ -18,8 +18,8 @@ goog.require('lime.fill.LinearGradient');
 clapping.Game = function(myMode) {
 	lime.Sprite.call(this);
 
-	this.w = 320;
-	this.h = 460;
+	this.w = clapping.director.getSize().width;
+	this.h = clapping.director.getSize().height;
 	this.setSize(this.w, this.h).setAnchorPoint(.5, .5);
 
 	var back1 = new lime.fill.LinearGradient().addColorStop(0, '#bbb').addColorStop(1, '#ddd');

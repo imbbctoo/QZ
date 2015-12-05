@@ -15,8 +15,8 @@ goog.require('numrubik.Unit');
 numrubik.Game33 = function() {
 	lime.Sprite.call(this);
 
-	this.w = 320;
-	this.h = 460;
+	this.w = numrubik.director.getSize().width;
+	this.h = numrubik.director.getSize().height;
 	this.setSize(this.w, this.h).setAnchorPoint(.5, .5).setFill('#FFF');
 
 	this.unit = [];

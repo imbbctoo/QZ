@@ -1,0 +1,1 @@
+python ../../bin/lime.py build blackjack -o ../../compiled/blackjack_c/blackjack_c.js -a -p blackjack.start

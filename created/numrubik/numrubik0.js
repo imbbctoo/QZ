@@ -15,7 +15,7 @@ numrubik.Menu = function() {
 
 	goog.events.listen(this.btn33, 'click', function() {
 		var scene = new lime.Scene(),
-		layer = new lime.Layer().setPosition(160, 230);
+		layer = new lime.Layer().setPosition(numrubik.director.getSize().width / 2, numrubik.director.getSize().height / 2);
 
 		scene.appendChild(layer);
 
@@ -28,7 +28,7 @@ numrubik.Menu = function() {
 
 	goog.events.listen(this.btn44, 'click', function() {
 		var scene = new lime.Scene(),
-		layer = new lime.Layer().setPosition(160, 230);
+		layer = new lime.Layer().setPosition(numrubik.director.getSize().width / 2, numrubik.director.getSize().height / 2);
 
 		scene.appendChild(layer);
 

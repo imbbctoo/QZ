@@ -1,13 +1,10 @@
-//set main namespace
 goog.provide('clapping');
 
-
-//get requirements
 goog.require('clapping.Back');
 goog.require('clapping.Game');
-goog.require('clapping.Lime');
 goog.require('clapping.Menu');
 goog.require('goog.Timer');
+goog.require('imbbctoo.Lime');
 goog.require('lime.Director');
 goog.require('lime.GlossyButton');
 goog.require('lime.Layer');
@@ -15,16 +12,30 @@ goog.require('lime.Scene');
 goog.require('lime.audio.Audio');
 goog.require('lime.transitions.SlideIn');
 
-// entrypoint
 clapping.start = function() {
 	console.log('created by imbbctoo');
 
+	var head = document.getElementsByTagName('head')[0];
+
+	var style = document.createElement('style');
+	style.type = 'text/css';
+
+	var css = 'body{background:black;overflow:hidden;}';
+
+	style.appendChild(document.createTextNode(css));
+
+	head.appendChild(style);
+
 	clapping.startSound = new lime.audio.Audio('assets/moveout.mp3');
 
-	clapping.director = new lime.Director(document.body, 320, 460);
+	var w = 320;
+	var h = window.innerHeight / window.innerWidth * w;
+	h = h < 460 ? 460 : h;
+
+	clapping.director = new lime.Director(document.body, w, h);
 	clapping.director.makeMobileWebAppCapable();
 
-	clapping.lime = new clapping.Lime();
+	clapping.lime = new imbbctoo.Lime(clapping.director.getSize().width / 2, clapping.director.getSize().height - 40);
 
 	clapping.reloadSound = new lime.audio.Audio('assets/gunpickup2.mp3');
 	clapping.fireSound = new lime.audio.Audio('assets/p228-1.mp3');
@@ -49,8 +60,10 @@ clapping.start = function() {
 
 	var scene = new lime.Scene();
 
-	var layer = new lime.Layer().setPosition(160, 230);
+	var layer = new lime.Layer().setPosition(clapping.director.getSize().width / 2, clapping.director.getSize().height / 2);
 	scene.appendChild(layer);
+	
+	layer.appendChild(new lime.Sprite().setSize(clapping.director.getSize().width, clapping.director.getSize().height).setFill(255, 255, 255));
 
 	var lbl = new lime.Label().setSize(320, 12).setFontSize(40).setText(
 		(clapping.getCookie('myScore'))
@@ -72,7 +85,7 @@ clapping.start = function() {
 	var btn = new lime.GlossyButton('PLAY').setSize(100, 40).setPosition(0, 50);
 	goog.events.listen(btn, ['mousedown', 'touchstart'], function() {
 		var scene = new lime.Scene(),
-		layer = new lime.Layer().setPosition(160, 230);
+		layer = new lime.Layer().setPosition(clapping.director.getSize().width / 2, clapping.director.getSize().height / 2);
 
 		scene.appendChild(layer);
 
@@ -115,6 +128,4 @@ clapping.setCookie = function(c_name, value, expiredays) {
 	((expiredays == null) ? '' : ';expires=' + exdate.toGMTString());
 };
 
-
-//this is required for outside access after code is compiled in ADVANCED_COMPILATIONS mode
 goog.exportSymbol('clapping.start', clapping.start);

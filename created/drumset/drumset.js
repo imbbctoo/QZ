@@ -16,9 +16,9 @@ drumset.start = function() {
 	var director = new lime.Director(document.body, 500, 500);
 	var scene = new lime.Scene();
 	var layer = new lime.Layer();
-	var sprite = new lime.Sprite().setSize(500, 500).setFill('assets/drumset.png');
+	var sprite = new lime.Sprite().setSize(director.getSize().width, director.getSize().height).setFill('assets/drumset.png');
 
-	scene.appendChild(layer.setPosition(250, 250));
+	scene.appendChild(layer.setPosition(director.getSize().width / 2, director.getSize().height / 2));
 	layer.appendChild(sprite);
 
 	var num = 30;

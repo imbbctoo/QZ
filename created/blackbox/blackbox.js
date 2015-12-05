@@ -1,17 +1,13 @@
-//set main namespace
 goog.provide('blackbox');
 
-
-//get requirements
 goog.require('blackbox.Game');
-goog.require('blackbox.Lime');
+goog.require('imbbctoo.Lime');
 goog.require('lime.Director');
 goog.require('lime.GlossyButton');
 goog.require('lime.Layer');
 goog.require('lime.Scene');
 goog.require('lime.transitions.SlideIn');
 
-// entrypoint
 blackbox.start = function() {
 	console.log('created by imbbctoo');
 
@@ -26,17 +22,21 @@ blackbox.start = function() {
 
 	head.appendChild(style);
 
-	blackbox.director = new lime.Director(document.body, 320, 460);
+	var w = 320;
+	var h = window.innerHeight / window.innerWidth * w;
+	h = h < 460 ? 460 : h;
+
+	blackbox.director = new lime.Director(document.body, w, h);
 	blackbox.director.makeMobileWebAppCapable();
 
-	blackbox.lime = new blackbox.Lime();
+	blackbox.lime = new imbbctoo.Lime(blackbox.director.getSize().width / 2, blackbox.director.getSize().height - 40);
 
 	var scene = new lime.Scene();
 
-	var layer = new lime.Layer().setPosition(160, 230);
+	var layer = new lime.Layer().setPosition(blackbox.director.getSize().width / 2, blackbox.director.getSize().height / 2);
 	scene.appendChild(layer);
 
-	layer.appendChild(new lime.Sprite().setSize(400, 500).setFill(255, 255, 255));
+	layer.appendChild(new lime.Sprite().setSize(blackbox.director.getSize().width, blackbox.director.getSize().height).setFill(255, 255, 255));
 
 	var btn = new lime.GlossyButton('PLAY').setSize(100, 40);
 	goog.events.listen(btn, 'click', function() {
@@ -53,18 +53,16 @@ blackbox.start = function() {
 
 blackbox.newgame = function() {
 	var scene = new lime.Scene(),
-	layer = new lime.Layer().setPosition(160, 230);
+	layer = new lime.Layer().setPosition(blackbox.director.getSize().width / 2, blackbox.director.getSize().height / 2);
 
 	scene.appendChild(layer);
 
 	var game = new blackbox.Game();
-	layer.appendChild(game.setPosition(0, 0));
+	layer.appendChild(game);
 
 	blackbox.lime.builtWithLime(scene);
 
 	blackbox.director.replaceScene(scene, lime.transitions.SlideIn);
 };
 
-
-//this is required for outside access after code is compiled in ADVANCED_COMPILATIONS mode
 goog.exportSymbol('blackbox.start', blackbox.start);

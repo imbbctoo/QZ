@@ -1,7 +1,7 @@
 goog.provide('blackjack');
 
 goog.require('blackjack.Game');
-goog.require('blackjack.Lime');
+goog.require('imbbctoo.Lime');
 goog.require('lime.Director');
 goog.require('lime.Label');
 goog.require('lime.Layer');
@@ -16,6 +16,12 @@ goog.require('lime.transitions.Dissolve');
 blackjack.start = function() {
 	console.log('created by imbbctoo');
 
+	blackjack.bgMusic = document.createElement('audio');
+	blackjack.bgMusic.src = 'assets/baccano.mp3';
+	blackjack.bgMusic.loop = 'loop';
+	blackjack.bgMusic.autoplay = 'autoplay';
+	blackjack.bgMusic.pause();
+
 	var head = document.getElementsByTagName('head')[0];
 
 	var style = document.createElement('style');
@@ -27,17 +33,21 @@ blackjack.start = function() {
 
 	head.appendChild(style);
 
-	blackjack.director = new lime.Director(document.body, 320, 460);
+	var w = 320;
+	var h = window.innerHeight / window.innerWidth * w;
+	h = h < 460 ? 460 : h;
+
+	blackjack.director = new lime.Director(document.body, w, h);
 	blackjack.director.makeMobileWebAppCapable();
 
-	blackjack.lime = new blackjack.Lime();
+	blackjack.lime = new imbbctoo.Lime(blackjack.director.getSize().width / 2, blackjack.director.getSize().height - 40);
 
 	var scene = new lime.Scene();
 
-	var layer = new lime.Layer().setPosition(160, 230);
+	var layer = new lime.Layer().setPosition(blackjack.director.getSize().width / 2, blackjack.director.getSize().height / 2);
 	scene.appendChild(layer);
 
-	layer.appendChild(new lime.Sprite().setSize(322, 462).setFill(0, 0, 0));
+	layer.appendChild(new lime.Sprite().setSize(blackjack.director.getSize().width, blackjack.director.getSize().height).setFill(0, 0, 0));
 
 	var w = 430;
 	var h = 550;
@@ -50,22 +60,22 @@ blackjack.start = function() {
 	table.appendChild(new lime.Circle().setFill(0, 0, 0).setSize(w * r + 2, h * r + 2));
 	var back = new lime.fill.LinearGradient().addColorStop(0, '#2b4').addColorStop(1, '#183');
 	table.appendChild(new lime.Circle().setFill(back).setSize(w * r, h * r));
-	layer.appendChild(new lime.Sprite().setSize(322, 462).setFill(255, 255, 255).setOpacity(.7));
+	layer.appendChild(new lime.Sprite().setSize(blackjack.director.getSize().width, blackjack.director.getSize().height).setFill(255, 255, 255).setOpacity(.7));
 
 	layer.appendChild(new lime.Label().setSize(320, 12).setFontSize(50).setText('Black Jack').setPosition(0, -140));
 
 	layer.appendChild(new lime.Label().setSize(320, 12).setText('BEST SCORE').setPosition(0, -60));
 
-	layer.appendChild(new lime.Label().setSize(320, 12).setFontSize(40).setText(blackjack.getCookie('myScore')).setPosition(0, -30));
+	layer.appendChild(new lime.Label().setSize(320, 12).setFontSize(40).setText(blackjack.getCookie('cache')).setPosition(0, -30));
 
 	layer.appendChild(new lime.Label().setSize(320, 12).setText('connet me: kakalas@sohu.com').setPosition(0, 150));
 
-	var tap = new lime.Sprite().setSize(322, 462);
+	var tap = new lime.Sprite().setSize(blackjack.director.getSize().width, blackjack.director.getSize().height);
 	layer.appendChild(tap);
 
 	tap.appendChild(new lime.Label().setSize(320, 12).setText('Tap to start').setFontSize(20).setPosition(0, 50));
 
-	layer.appendChild(new lime.Sprite().setSize(320, 460).setFill(255, 255, 255).setOpacity(.1));
+	layer.appendChild(new lime.Sprite().setSize(blackjack.director.getSize().width, blackjack.director.getSize().height).setFill(255, 255, 255).setOpacity(.1));
 
 	var action1 = new lime.animation.Loop(
 		new lime.animation.Sequence(
@@ -79,9 +89,11 @@ blackjack.start = function() {
 	blackjack.game = new blackjack.Game();
 
 	goog.events.listen(tap, ['mousedown', 'touchstart'], function() {
+		blackjack.bgMusic.play();
+
 		var scene = new lime.Scene();
 
-		var layer = new lime.Layer().setPosition(160, 230);
+		var layer = new lime.Layer().setPosition(blackjack.director.getSize().width / 2, blackjack.director.getSize().height / 2);
 
 		scene.appendChild(layer);
 

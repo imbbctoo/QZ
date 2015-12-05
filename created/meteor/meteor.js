@@ -11,9 +11,7 @@ goog.require('lime.animation.Loop');
 goog.require('lime.animation.Sequence');
 
 meteor.start = function() {
-	eval(unescape('%63%6f%6e%73%6f%6c%65%2e%6c%6f%67%28%60%63%72%65%61%74%65%64%20%62%79%20%69%6d%62%62%63%74%6f%6f%60%29'));
-
-	var flag1 = 0;
+	console.log('created by imbbctoo');
 
 	var head = document.getElementsByTagName('head')[0];
 
@@ -47,10 +45,10 @@ meteor.start = function() {
 	var a = 160;
 	var b = 120;
 
-	var color1 = '#ff0';
+	var color5 = '#ff0';
 
 	var x = [];
-	for (var i = 0; i < 5; i++) x[i] = 50 + Math.random() * 600;
+	for (var i = 0; i < 5; i++) x[i] = 200 + Math.random() * 600;
 
 	function step1() {
 		var a = 160;
@@ -60,14 +58,14 @@ meteor.start = function() {
 
 		var anime = new lime.animation.Sequence(
 			new lime.animation.FadeTo(1).setDuration(.1),
-			new lime.animation.FadeTo(0).setDuration(2)
+			new lime.animation.FadeTo(0).setDuration(1)
 		);
 		for (var i = 0; i < 5; i++) {
-			var r = 50 + Math.random() * 600;
-			var rr = (10 - x[i] / 40) * a / b;
-			l[i] = new lime.Circle().setFill(color1);
-			x[i] < -600 ? x[i] = r : x[i] -= 11;
-			layer[i].appendChild(l[i].setPosition(0, -x[i]).setOpacity(0).setSize(rr, rr));
+			var r = 200 + Math.random() * 600;
+			var rr = (3 - x[i] / 50) * a / b;
+			l[i] = new lime.Circle().setFill(color5);
+			x[i] < -600 ? x[i] = r : x[i] -= 20;
+			layer[i].appendChild(l[i].setPosition(0, -x[i]).setOpacity(0).setSize(rr, rr * 10));
 			anime.addTarget(l[i]);
 		}
 		goog.events.listen(anime, 'stop', function() {
@@ -76,7 +74,7 @@ meteor.start = function() {
 		anime.play();
 	}
 
-	setInterval(step1, 20);
+	setInterval(step1, 50);
 
 	scene.appendChild(new lime.Sprite().setSize(960, 1500).setFill(0, 0, 0).setOpacity(.1));
 

@@ -1,8 +1,6 @@
-//set main namespace
 goog.provide('numrubik');
 
-
-//get requirements
+goog.require('imbbctoo.Lime');
 goog.require('lime.Director');
 goog.require('lime.GlossyButton');
 goog.require('lime.Layer');
@@ -11,23 +9,24 @@ goog.require('lime.transitions.SlideIn');
 goog.require('numrubik.Back');
 goog.require('numrubik.Game33');
 goog.require('numrubik.Game44');
-goog.require('numrubik.Lime');
 goog.require('numrubik.Menu');
 goog.require('numrubik.Table');
 
-
-// entrypoint
 numrubik.start = function() {
 	console.log('created by imbbctoo');
 
-	numrubik.director = new lime.Director(document.body, 320, 460);
+	var w = 320;
+	var h = window.innerHeight / window.innerWidth * w;
+	h = h < 460 ? 460 : h;
+
+	numrubik.director = new lime.Director(document.body, w, h);
 	numrubik.director.makeMobileWebAppCapable();
 
-	numrubik.lime = new numrubik.Lime();
+	numrubik.lime = new imbbctoo.Lime(numrubik.director.getSize().width / 2, numrubik.director.getSize().height - 40);
 
 	var scene = new lime.Scene();
 
-	var layer = new lime.Layer().setPosition(160, 230);
+	var layer = new lime.Layer().setPosition(numrubik.director.getSize().width / 2, numrubik.director.getSize().height / 2);
 	scene.appendChild(layer);
 
 	var lbl1 = new lime.Label().setSize(320, 12).setFontSize(10).setText(
@@ -76,7 +75,7 @@ numrubik.start = function() {
 	var btn = new lime.GlossyButton('PLAY').setSize(100, 40).setPosition(0, 110);
 	goog.events.listen(btn, 'click', function() {
 		var scene = new lime.Scene(),
-		layer = new lime.Layer().setPosition(160, 230);
+		layer = new lime.Layer().setPosition(numrubik.director.getSize().width / 2, numrubik.director.getSize().height / 2);
 
 		scene.appendChild(layer);
 
@@ -119,6 +118,4 @@ numrubik.setCookie = function(c_name, value, expiredays) {
 	((expiredays == null) ? '' : ';expires=' + exdate.toGMTString());
 };
 
-
-//this is required for outside access after code is compiled in ADVANCED_COMPILATIONS mode
 goog.exportSymbol('numrubik.start', numrubik.start);

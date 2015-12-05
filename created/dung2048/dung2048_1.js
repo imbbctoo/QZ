@@ -14,8 +14,8 @@ goog.require('lime.animation.Sequence');
 dung2048.Game = function(myMode) {
 	lime.Sprite.call(this);
 
-	this.w = 320;
-	this.h = 460;
+	this.w = dung2048.director.getSize().width;
+	this.h = dung2048.director.getSize().height;
 	this.setSize(this.w, this.h);
 
 	this.position = [];

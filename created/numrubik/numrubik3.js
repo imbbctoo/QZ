@@ -23,7 +23,7 @@ numrubik.Notice = function() {
 	this.lbl5 = new lime.Label().setText('TIME').setAnchorPoint(1, 0).setPosition(60, 50);
 	this.box.appendChild(this.lbl5);
 
-	this.box2 = new lime.Sprite().setSize(320, 460).setAnchorPoint(.5, .5).setFill('#FFF').setOpacity(.5);
+	this.box2 = new lime.Sprite().setSize(numrubik.director.getSize().width, numrubik.director.getSize().height).setAnchorPoint(.5, .5).setFill('#FFF').setOpacity(.5);
 	this.appendChild(this.box2);
 	this.appendChild(this.box);
 };

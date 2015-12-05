@@ -12,11 +12,11 @@ numrubik.Back = function() {
 
 	goog.events.listen(this.btn, 'click', function() {
 		var scene = new lime.Scene(),
-		layer = new lime.Layer().setPosition(160, 230);
+		layer = new lime.Layer().setPosition(numrubik.director.getSize().width / 2, numrubik.director.getSize().height / 2);
 
 		scene.appendChild(layer);
 
-		layer.appendChild(numrubik.menu.setPosition(0, 0));
+		layer.appendChild(numrubik.menu);
 
 		numrubik.lime.builtWithLime(scene);
 

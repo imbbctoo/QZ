@@ -18,14 +18,18 @@ xmastree.start = function() {
 
 	head.appendChild(style);
 
-	var director = new lime.Director(document.body, 320, 500);
+	var w = 320;
+	var h = window.innerHeight / window.innerWidth * w;
+	h = h < 460 ? 460 : h;
+
+	var director = new lime.Director(document.body, w, h);
 	var scene = new lime.Scene();
 
 	director.makeMobileWebAppCapable();
 
 	var matrix = document.createElement('canvas');
-	matrix.height = 460;
-	matrix.width = 320;
+	matrix.height = director.getSize().height;
+	matrix.width = director.getSize().width;
 	scene.appendChild(matrix);
 
 	var context = matrix.getContext('2d');
@@ -43,7 +47,8 @@ xmastree.start = function() {
 		context.fillRect(0, 0, matrix.width, matrix.height);
 		context.fillStyle = '#0f0';
 		context.font = font_size + 'px';
-		var move = 4;
+		var move = window.innerHeight / 460 * 4;
+		console.log(move);
 		for (var i = 0; i < columns; i++) {
 			for (var j = 0; j <= 3; j++) {
 				if (i == parseInt((columns - 1) / 2 + j) || i == parseInt((columns - 1) / 2 - j)) {

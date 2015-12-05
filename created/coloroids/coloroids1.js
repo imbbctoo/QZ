@@ -17,8 +17,8 @@ coloroids.Game = function() {
 
 	lime.Sprite.call(this);
 
-	this.w = 320;
-	this.h = 460;
+	this.w = coloroids.director.getSize().width;
+	this.h = coloroids.director.getSize().height;
 	this.setSize(this.w, this.h).setAnchorPoint(.5, .5);
 
 	this.setFill('assets/bg.png');
