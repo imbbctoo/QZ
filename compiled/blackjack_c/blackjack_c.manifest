@@ -2,12 +2,13 @@ CACHE MANIFEST
 
 # If you use more files you need to manually list them here.
 # Don't remove next line
-# Updated on: 2015-12-05 12:49:38
+# Updated on: 2015-12-10 20:12:19
 
 blackjack_c.js
 assets/startup.jpg
 assets/startup_ipad.jpg
 assets/icon.png
+assets/baccano.mp3
 
 NETWORK:
 *

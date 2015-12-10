@@ -86,9 +86,8 @@ dung2048.Game = function(myMode) {
 
 	this.controller = new lime.Sprite().setSize(this.w * 4, this.h * 4).setFill(255, 255, 255).setOpacity(.1);
 	this.appendChild(this.controller);
-/*
-	var s = new lime.Sprite().setSize(20, 20).setFill(255, 0, 0);
-	this.controller.appendChild(s);*/
+
+	//this.controller.appendChild(new lime.Sprite().setSize(20, 20).setFill(255, 0, 0));
 
 	this.renew();
 
@@ -117,7 +116,6 @@ dung2048.Game = function(myMode) {
 
 				e.swallow(['mouseup', 'touchend'], function() {
 					var pos = this.getParent().controller.getPosition();
-					this.getParent().controller.setPosition(pos);
 					if (pos.x > 10 || pos.x < -10 || pos.y > 10 || pos.y < -10) {
 						this.getParent().flag[2] = false;
 						this.getParent().step(e);
@@ -176,7 +174,7 @@ dung2048.Game.prototype.renew = function() {
 	this.lbl4.setText(Math.ceil(this.hrt / 9));
 
 	for (var j = 0; j < 16; j++) {
-		for (var i = 1; i < this.back.getNumberOfChildren(); i++) {
+		for (var i = 1, len = this.back.getNumberOfChildren(); i < len; i++) {
 			this.back.removeChild(this.back.getChildAt(i));
 		}
 	}
@@ -225,29 +223,29 @@ dung2048.Game.prototype.step = function(e) {
 	this.posutk = [];
 	this.score = 0;
 
-	for (var i = 1; i < this.back.getNumberOfChildren(); i++) {
+	for (var i = 1, len = this.back.getNumberOfChildren(); i < len; i++) {
 		this.postkn[i] = new goog.math.Coordinate(this.back.getChildAt(i).getPosition().x, this.back.getChildAt(i).getPosition().y);
 		this.obsnum[i] = 0;
 	}
 
 	if ((pos.y < pos.x && pos.y > -pos.x && pos.x > 10) || e.keyCode == 68 || e.keyCode == 39) {
 		this.r_cth();
-		for (var i = 1; i < this.back.getNumberOfChildren(); i++) {
+		for (var i = 1, len = this.back.getNumberOfChildren(); i < len; i++) {
 			this.r_ctl(i);
 		}
 	} else if ((pos.y > pos.x && pos.y < -pos.x && pos.x < -10) || e.keyCode == 65 || e.keyCode == 37) {
 		this.l_cth();
-		for (var i = 1; i < this.back.getNumberOfChildren(); i++) {
+		for (var i = 1, len = this.back.getNumberOfChildren(); i < len; i++) {
 			this.l_ctl(i);
 		}
 	} else if ((pos.y > pos.x && pos.y > -pos.x && pos.y > 10) || e.keyCode == 83 || e.keyCode == 40) {
 		this.d_cth();
-		for (var i = 1; i < this.back.getNumberOfChildren(); i++) {
+		for (var i = 1, len = this.back.getNumberOfChildren(); i < len; i++) {
 			this.d_ctl(i);
 		}
 	} else if ((pos.y < pos.x && pos.y < -pos.x && pos.y < -10) || e.keyCode == 87 || e.keyCode == 38) {
 		this.u_cth();
-		for (var i = 1; i < this.back.getNumberOfChildren(); i++) {
+		for (var i = 1, len = this.back.getNumberOfChildren(); i < len; i++) {
 			this.u_ctl(i);
 		}
 	}
@@ -257,10 +255,10 @@ dung2048.Game.prototype.step = function(e) {
 dung2048.Game.prototype.r_cth = function() {
 	for (var n = 0; n <= 12; n += 4) {
 		for (var j = n + 3; j >= n; j--) {
-			for (var i = 1; i < this.back.getNumberOfChildren(); i++) {
+			for (var i = 1, len = this.back.getNumberOfChildren(); i < len; i++) {
 				this.oripos[i] = new goog.math.Coordinate(this.back.getChildAt(i).getPosition().x, this.back.getChildAt(i).getPosition().y);
 				if (this.oripos[i].x == this.position[j].x && this.oripos[i].y == this.position[j].y) {
-					this.back.setChildIndex(this.back.getChildAt(i), this.back.getNumberOfChildren() - 1);
+					this.back.setChildIndex(this.back.getChildAt(i), len - 1);
 					break;
 				}
 			}
@@ -271,10 +269,10 @@ dung2048.Game.prototype.r_cth = function() {
 dung2048.Game.prototype.l_cth = function() {
 	for (var n = 0; n <= 12; n += 4) {
 		for (var j = n; j <= n + 3; j++) {
-			for (var i = 1; i < this.back.getNumberOfChildren(); i++) {
+			for (var i = 1, len = this.back.getNumberOfChildren(); i < len; i++) {
 				this.oripos[i] = new goog.math.Coordinate(this.back.getChildAt(i).getPosition().x, this.back.getChildAt(i).getPosition().y);
 				if (this.oripos[i].x == this.position[j].x && this.oripos[i].y == this.position[j].y) {
-					this.back.setChildIndex(this.back.getChildAt(i), this.back.getNumberOfChildren() - 1);
+					this.back.setChildIndex(this.back.getChildAt(i), len - 1);
 					break;
 				}
 			}
@@ -285,10 +283,10 @@ dung2048.Game.prototype.l_cth = function() {
 dung2048.Game.prototype.d_cth = function() {
 	for (var n = 0; n <= 3; n++) {
 		for (var j = n + 12; j >= n; j -= 4) {
-			for (var i = 1; i < this.back.getNumberOfChildren(); i++) {
+			for (var i = 1, len = this.back.getNumberOfChildren(); i < len; i++) {
 				this.oripos[i] = new goog.math.Coordinate(this.back.getChildAt(i).getPosition().x, this.back.getChildAt(i).getPosition().y);
 				if (this.oripos[i].x == this.position[j].x && this.oripos[i].y == this.position[j].y) {
-					this.back.setChildIndex(this.back.getChildAt(i), this.back.getNumberOfChildren() - 1);
+					this.back.setChildIndex(this.back.getChildAt(i), len - 1);
 					break;
 				}
 			}
@@ -299,13 +297,42 @@ dung2048.Game.prototype.d_cth = function() {
 dung2048.Game.prototype.u_cth = function() {
 	for (var n = 0; n <= 3; n++) {
 		for (var j = n; j <= n + 12; j += 4) {
-			for (var i = 1; i < this.back.getNumberOfChildren(); i++) {
+			for (var i = 1, len = this.back.getNumberOfChildren(); i < len; i++) {
 				this.oripos[i] = new goog.math.Coordinate(this.back.getChildAt(i).getPosition().x, this.back.getChildAt(i).getPosition().y);
 				if (this.oripos[i].x == this.position[j].x && this.oripos[i].y == this.position[j].y) {
-					this.back.setChildIndex(this.back.getChildAt(i), this.back.getNumberOfChildren() - 1);
+					this.back.setChildIndex(this.back.getChildAt(i), len - 1);
 					break;
 				}
 			}
+		}
+	}
+};
+
+dung2048.Game.prototype.func1 = function(i, k) {
+	for (var l = 1, len = this.back.getNumberOfChildren(); l < len; l++) {
+		if (this.position[k].x == this.postkn[l].x && this.position[k].y == this.postkn[l].y) {
+			this.obsnum[i] += 1;
+			if (this.flag[0]) {
+				for (var m = 1, len = this.back.getNumberOfChildren(); m < len; m++) {
+					if (this.back.getChildAt(m).getPosition().x == this.position[k].x && this.back.getChildAt(m).getPosition().y == this.position[k].y) {
+						if (this.back.getChildAt(i).who == this.back.getChildAt(m).who) {
+							this.score += 1;
+							this.obsnum[i] -= 1;
+							if (!this.back.getChildAt(m).rm) {
+								this.back.getChildAt(i).lbl.setText(parseInt(this.back.getChildAt(i).lbl.getText()) + parseInt(this.back.getChildAt(m).lbl.getText()));
+								if (parseInt(this.back.getChildAt(i).lbl.getText()) >= this.top) {
+									this.back.getChildAt(i).lbl.setText(this.top);
+								}
+							}
+							this.back.getChildAt(m).rm = true;
+						} else {
+							this.flag[0] = false;
+						}
+						break;
+					}
+				}
+			}
+			break;
 		}
 	}
 };
@@ -316,34 +343,7 @@ dung2048.Game.prototype.r_ctl = function(i) {
 	for (var n = 0; n <= 12; n += 4) {
 		for (var j = n + 3; j >= n; j--) {
 			if (this.oripos[i].x == this.position[j].x && this.oripos[i].y == this.position[j].y) {
-				for (var k = j + 1; k < n + 4; k++) {
-					for (var l = 1; l < this.back.getNumberOfChildren(); l++) {
-						if (this.position[k].x == this.postkn[l].x && this.position[k].y == this.postkn[l].y) {
-							this.obsnum[i] += 1;
-							if (this.flag[0]) {
-								for (var m = 1; m < this.back.getNumberOfChildren(); m++) {
-									if (this.back.getChildAt(m).getPosition().x == this.position[k].x && this.back.getChildAt(m).getPosition().y == this.position[k].y) {
-										if (this.back.getChildAt(i).who == this.back.getChildAt(m).who) {
-											this.score += 1;
-											this.obsnum[i] -= 1;
-											if (!this.back.getChildAt(m).rm) {
-												this.back.getChildAt(i).lbl.setText(parseInt(this.back.getChildAt(i).lbl.getText()) + parseInt(this.back.getChildAt(m).lbl.getText()));
-												if (parseInt(this.back.getChildAt(i).lbl.getText()) >= this.top) {
-													this.back.getChildAt(i).lbl.setText(this.top);
-												}
-											}
-											this.back.getChildAt(m).rm = true;
-										} else {
-											this.flag[0] = false;
-										}
-										break;
-									}
-								}
-							}
-							break;
-						}
-					}
-				}
+				for (var k = j + 1; k < n + 4; k++) this.func1(i, k);
 				for (var k = 0; k < 16; k++) {
 					if (this.back.getChildAt(i).getPosition().x == this.position[k].x && this.back.getChildAt(i).getPosition().y == this.position[k].y) {
 						for (var l = 3; l >= 0; l--) {
@@ -359,7 +359,6 @@ dung2048.Game.prototype.r_ctl = function(i) {
 										}
 										moveTo.play();
 										goog.events.listen(moveTo, 'stop', function() {
-											this.getParent().getChildAt(0).back.getChildAt(i).setPosition(this.getParent().getChildAt(0).tagpos[i]);
 											if (i == 1) {
 												this.getParent().getChildAt(0).remove();
 												this.getParent().getChildAt(0).r_eat();
@@ -389,34 +388,7 @@ dung2048.Game.prototype.l_ctl = function(i) {
 	for (var n = 0; n <= 12; n += 4) {
 		for (var j = n; j <= n + 3; j++) {
 			if (this.oripos[i].x == this.position[j].x && this.oripos[i].y == this.position[j].y) {
-				for (var k = j - 1; k >= n; k--) {
-					for (var l = 1; l < this.back.getNumberOfChildren(); l++) {
-						if (this.position[k].x == this.postkn[l].x && this.position[k].y == this.postkn[l].y) {
-							this.obsnum[i] += 1;
-							if (this.flag[0]) {
-								for (var m = 1; m < this.back.getNumberOfChildren(); m++) {
-									if (this.back.getChildAt(m).getPosition().x == this.position[k].x && this.back.getChildAt(m).getPosition().y == this.position[k].y) {
-										if (this.back.getChildAt(i).who == this.back.getChildAt(m).who) {
-											this.score += 1;
-											this.obsnum[i] -= 1;
-											if (!this.back.getChildAt(m).rm) {
-												this.back.getChildAt(i).lbl.setText(parseInt(this.back.getChildAt(i).lbl.getText()) + parseInt(this.back.getChildAt(m).lbl.getText()));
-												if (parseInt(this.back.getChildAt(i).lbl.getText()) >= this.top) {
-													this.back.getChildAt(i).lbl.setText(this.top);
-												}
-											}
-											this.back.getChildAt(m).rm = true;
-										} else {
-											this.flag[0] = false;
-										}
-										break;
-									}
-								}
-							}
-							break;
-						}
-					}
-				}
+				for (var k = j - 1; k >= n; k--) this.func1(i, k);
 				for (var k = 0; k < 16; k++) {
 					if (this.back.getChildAt(i).getPosition().x == this.position[k].x && this.back.getChildAt(i).getPosition().y == this.position[k].y) {
 						for (var l = 0; l <= 3; l++) {
@@ -432,7 +404,6 @@ dung2048.Game.prototype.l_ctl = function(i) {
 										}
 										moveTo.play();
 										goog.events.listen(moveTo, 'stop', function() {
-											this.getParent().getChildAt(0).back.getChildAt(i).setPosition(this.getParent().getChildAt(0).tagpos[i]);
 											if (i == 1) {
 												this.getParent().getChildAt(0).remove();
 												this.getParent().getChildAt(0).l_eat();
@@ -462,34 +433,7 @@ dung2048.Game.prototype.d_ctl = function(i) {
 	for (var n = 0; n <= 3; n++) {
 		for (var j = n + 12; j >= n; j -= 4) {
 			if (this.oripos[i].x == this.position[j].x && this.oripos[i].y == this.position[j].y) {
-				for (var k = j + 4; k <= n + 12; k += 4) {
-					for (var l = 1; l < this.back.getNumberOfChildren(); l++) {
-						if (this.position[k].x == this.postkn[l].x && this.position[k].y == this.postkn[l].y) {
-							this.obsnum[i] += 1;
-							if (this.flag[0]) {
-								for (var m = 1; m < this.back.getNumberOfChildren(); m++) {
-									if (this.back.getChildAt(m).getPosition().x == this.position[k].x && this.back.getChildAt(m).getPosition().y == this.position[k].y) {
-										if (this.back.getChildAt(i).who == this.back.getChildAt(m).who) {
-											this.score += 1;
-											this.obsnum[i] -= 1;
-											if (!this.back.getChildAt(m).rm) {
-												this.back.getChildAt(i).lbl.setText(parseInt(this.back.getChildAt(i).lbl.getText()) + parseInt(this.back.getChildAt(m).lbl.getText()));
-												if (parseInt(this.back.getChildAt(i).lbl.getText()) >= this.top) {
-													this.back.getChildAt(i).lbl.setText(this.top);
-												}
-											}
-											this.back.getChildAt(m).rm = true;
-										} else {
-											this.flag[0] = false;
-										}
-										break;
-									}
-								}
-							}
-							break;
-						}
-					}
-				}
+				for (var k = j + 4; k <= n + 12; k += 4) this.func1(i, k);
 				for (var k = 0; k < 16; k++) {
 					if (this.back.getChildAt(i).getPosition().x == this.position[k].x && this.back.getChildAt(i).getPosition().y == this.position[k].y) {
 						for (var l = 12; l >= 0; l -= 4) {
@@ -505,7 +449,6 @@ dung2048.Game.prototype.d_ctl = function(i) {
 										}
 										moveTo.play();
 										goog.events.listen(moveTo, 'stop', function() {
-											this.getParent().getChildAt(0).back.getChildAt(i).setPosition(this.getParent().getChildAt(0).tagpos[i]);
 											if (i == 1) {
 												this.getParent().getChildAt(0).remove();
 												this.getParent().getChildAt(0).d_eat();
@@ -535,34 +478,7 @@ dung2048.Game.prototype.u_ctl = function(i) {
 	for (var n = 0; n <= 3; n++) {
 		for (var j = n; j <= n + 12; j += 4) {
 			if (this.oripos[i].x == this.position[j].x && this.oripos[i].y == this.position[j].y) {
-				for (var k = j - 4; k >= n; k -= 4) {
-					for (var l = 1; l < this.back.getNumberOfChildren(); l++) {
-						if (this.position[k].x == this.postkn[l].x && this.position[k].y == this.postkn[l].y) {
-							this.obsnum[i] += 1;
-							if (this.flag[0]) {
-								for (var m = 1; m < this.back.getNumberOfChildren(); m++) {
-									if (this.back.getChildAt(m).getPosition().x == this.position[k].x && this.back.getChildAt(m).getPosition().y == this.position[k].y) {
-										if (this.back.getChildAt(i).who == this.back.getChildAt(m).who) {
-											this.score += 1;
-											this.obsnum[i] -= 1;
-											if (!this.back.getChildAt(m).rm) {
-												this.back.getChildAt(i).lbl.setText(parseInt(this.back.getChildAt(i).lbl.getText()) + parseInt(this.back.getChildAt(m).lbl.getText()));
-												if (parseInt(this.back.getChildAt(i).lbl.getText()) >= this.top) {
-													this.back.getChildAt(i).lbl.setText(this.top);
-												}
-											}
-											this.back.getChildAt(m).rm = true;
-										} else {
-											this.flag[0] = false;
-										}
-										break;
-									}
-								}
-							}
-							break;
-						}
-					}
-				}
+				for (var k = j - 4; k >= n; k -= 4) this.func1(i, k);
 				for (var k = 0; k < 16; k++) {
 					if (this.back.getChildAt(i).getPosition().x == this.position[k].x && this.back.getChildAt(i).getPosition().y == this.position[k].y) {
 						for (var l = 0; l <= 12; l += 4) {
@@ -578,7 +494,6 @@ dung2048.Game.prototype.u_ctl = function(i) {
 										}
 										moveTo.play();
 										goog.events.listen(moveTo, 'stop', function() {
-											this.getParent().getChildAt(0).back.getChildAt(i).setPosition(this.getParent().getChildAt(0).tagpos[i]);
 											if (i == 1) {
 												this.getParent().getChildAt(0).remove();
 												this.getParent().getChildAt(0).u_eat();
@@ -607,7 +522,7 @@ dung2048.Game.prototype.add = function() {
 	var n = 0;
 	for (var i = 1; i <= 16; i++) {
 		this.posutk[i] = new goog.math.Coordinate(this.position[i - 1].x, this.position[i - 1].y);
-		for (var j = 1; j < this.back.getNumberOfChildren(); j++) {
+		for (var j = 1, len = this.back.getNumberOfChildren(); j < len; j++) {
 			if (this.posutk[i].x == this.back.getChildAt(j).getPosition().x && this.posutk[i].y == this.back.getChildAt(j).getPosition().y) {
 				this.posutk[i].x = 0;
 				break;
@@ -693,9 +608,9 @@ dung2048.Game.prototype.check = function() {
 dung2048.Game.prototype.r_eat = function() {
 	for (var n = 0; n <= 12; n += 4) {
 		for (var j = n + 2; j >= n; j--) {
-			for (var i = 1; i < this.back.getNumberOfChildren(); i++) {
+			for (var i = 1, len = this.back.getNumberOfChildren(); i < len; i++) {
 				if (this.back.getChildAt(i).getPosition().x == this.position[j].x && this.back.getChildAt(i).getPosition().y == this.position[j].y) {
-					for (var k = 1; k < this.back.getNumberOfChildren() - 1; k++) {
+					for (var k = 1, len = this.back.getNumberOfChildren(); k < len - 1; k++) {
 						if (this.position[j + 1].x == this.back.getChildAt(k).getPosition().x && this.position[j + 1].y == this.back.getChildAt(k).getPosition().y) {
 							this.judge(i, k);
 							break;
@@ -711,9 +626,9 @@ dung2048.Game.prototype.r_eat = function() {
 dung2048.Game.prototype.l_eat = function() {
 	for (var n = 0; n <= 12; n += 4) {
 		for (var j = n + 1; j <= n + 3; j++) {
-			for (var i = 1; i < this.back.getNumberOfChildren(); i++) {
+			for (var i = 1, len = this.back.getNumberOfChildren(); i < len; i++) {
 				if (this.back.getChildAt(i).getPosition().x == this.position[j].x && this.back.getChildAt(i).getPosition().y == this.position[j].y) {
-					for (var k = 1; k < this.back.getNumberOfChildren() - 1; k++) {
+					for (var k = 1, len = this.back.getNumberOfChildren(); k < len - 1; k++) {
 						if (this.position[j - 1].x == this.back.getChildAt(k).getPosition().x && this.position[j - 1].y == this.back.getChildAt(k).getPosition().y) {
 							this.judge(i, k);
 							break;
@@ -729,9 +644,9 @@ dung2048.Game.prototype.l_eat = function() {
 dung2048.Game.prototype.d_eat = function() {
 	for (var n = 0; n <= 3; n++) {
 		for (var j = n + 8; j >= n; j -= 4) {
-			for (var i = 1; i < this.back.getNumberOfChildren(); i++) {
+			for (var i = 1, len = this.back.getNumberOfChildren(); i < len; i++) {
 				if (this.back.getChildAt(i).getPosition().x == this.position[j].x && this.back.getChildAt(i).getPosition().y == this.position[j].y) {
-					for (var k = 1; k < this.back.getNumberOfChildren() - 1; k++) {
+					for (var k = 1, len = this.back.getNumberOfChildren(); k < len - 1; k++) {
 						if (this.position[j + 4].x == this.back.getChildAt(k).getPosition().x && this.position[j + 4].y == this.back.getChildAt(k).getPosition().y) {
 							this.judge(i, k);
 							break;
@@ -747,9 +662,9 @@ dung2048.Game.prototype.d_eat = function() {
 dung2048.Game.prototype.u_eat = function() {
 	for (var n = 0; n <= 3; n++) {
 		for (var j = n + 4; j <= n + 12; j += 4) {
-			for (var i = 1; i < this.back.getNumberOfChildren(); i++) {
+			for (var i = 1, len = this.back.getNumberOfChildren(); i < len; i++) {
 				if (this.back.getChildAt(i).getPosition().x == this.position[j].x && this.back.getChildAt(i).getPosition().y == this.position[j].y) {
-					for (var k = 1; k < this.back.getNumberOfChildren() - 1; k++) {
+					for (var k = 1, len = this.back.getNumberOfChildren(); k < len - 1; k++) {
 						if (this.position[j - 4].x == this.back.getChildAt(k).getPosition().x && this.position[j - 4].y == this.back.getChildAt(k).getPosition().y) {
 							this.judge(i, k);
 							break;
@@ -839,7 +754,7 @@ dung2048.Game.prototype.endGame = function(val) {
 	}
 	this.notice[val].lbl_s.setText(parseInt(this.lbl2.getText()) + ' + ' + bonus);
 	dung2048.myScore = parseInt(this.lbl2.getText()) + bonus;
-	var bScore = parseInt(dung2048.getCookie('myScore'));
+	var bScore = dung2048.getCookie('myScore');
 	if (bScore != null && bScore != '') {
 		bScore = (bScore > dung2048.myScore ? bScore : dung2048.myScore);
 	} else {

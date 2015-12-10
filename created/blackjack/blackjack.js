@@ -88,7 +88,8 @@ blackjack.start = function() {
 
 	blackjack.game = new blackjack.Game();
 
-	goog.events.listen(tap, ['mousedown', 'touchstart'], function() {
+	goog.events.listen(tap, ['mousedown', 'touchstart'], function() {});
+	goog.events.listenOnce(tap, ['mousedown', 'touchstart'], function() {
 		blackjack.bgMusic.play();
 
 		var scene = new lime.Scene();

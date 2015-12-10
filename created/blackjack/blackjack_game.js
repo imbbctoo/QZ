@@ -55,12 +55,10 @@ blackjack.Game = function(myMode) {
 
 	this.c[2] = new blackjack.Scoreboard();
 	this.c[2].label.setText('PLAYER');
-	this.c[2].number.setText(200);
 	this.appendChild(this.c[2].setPosition(90, -200));
 
 	this.c[1] = new blackjack.Scoreboard();
 	this.c[1].label.setText('DEALER');
-	this.c[1].number.setText(200);
 	this.appendChild(this.c[1].setPosition(-90, -200));
 
 	this.cards = new blackjack.Scoreboard();
@@ -96,7 +94,7 @@ blackjack.Game = function(myMode) {
 	this.layer[0].appendChild(this.chip.setPosition(100, 107));
 
 	goog.events.listen(this.chip, ['mousedown', 'touchstart'], function() {
-		if (!this.timer[0].enabled && parseInt(this.chip.l.getText()) < 10) {
+		if (!this.timer[0].enabled && parseInt(this.chip.l.getText()) < 10 && parseInt(this.c[2].number.getText()) > 0 && parseInt(this.c[1].number.getText()) > 0) {
 			this.chip.stop();
 			this.chip.runAction(new lime.animation.Sequence(
 				new lime.animation.ScaleTo(.9).setDuration(.1),
@@ -158,16 +156,24 @@ blackjack.Game = function(myMode) {
 	for (var i = 0; i <= 8; i++) {
 		this.notice[i] = new blackjack.Notice(i);
 		this.notice[i].refresh(0);
+		this.appendChild(this.notice[i].setOpacity(0));
 	}
 
-	for (var i = 0; i <= 8; i++) {
+	for (var i = 0; i <= 6; i++) {
 		goog.events.listen(this.notice[i], ['mousedown', 'touchstart'], function() {
 			this.timer[0].stop();
 			this.newRound();
 		}, false, this);
 	}
 
-	this.shuffle_notice = new lime.Layer().appendChild(new lime.Sprite().setSize(350, 35).setFill(0, 0, 0).setOpacity(.6)).appendChild(new lime.Label().setFontSize(20).setFontColor('#fff').setText('SHUFFLING!'));
+	for (var i = 7; i <= 8; i++) {
+		goog.events.listen(this.notice[i], ['mousedown', 'touchstart'], function() {
+			this.timer[0].stop();
+			this.newGame();
+		}, false, this);
+	}
+
+	this.shuffle_notice = new lime.Layer().appendChild(new lime.Sprite().setSize(350, 35).setFill(0, 0, 0).setOpacity(.6)).appendChild(new lime.Label().setFontSize(20).setFontColor('#fff').setText('SHUFFLING'));
 	this.appendChild(this.shuffle_notice.setPosition(0, -100));
 
 	this.newGame();
@@ -183,9 +189,9 @@ blackjack.Game.prototype.newRound = function() {
 	this.timer[3].stop();
 	this.p[2].number.setText(0);
 	this.p[1].number.setText(0);
-	this.c[2].number.setText(parseInt(this.c[2].number.getText()) - 1);
-	this.c[1].number.setText(parseInt(this.c[1].number.getText()) - 1);
 	this.chip.l.setText(1);
+	this.c[2].number.setText(parseInt(this.c[2].number.getText()) - parseInt(this.chip.l.getText()));
+	this.c[1].number.setText(parseInt(this.c[1].number.getText()) - parseInt(this.chip.l.getText()));
 	this.chip.anime.play();
 	this.layer[3].runAction(new lime.animation.MoveTo(0, 160).setDuration(.3));
 	this.layer[4].runAction(new lime.animation.MoveTo(0, 350).setDuration(.3));
@@ -210,9 +216,21 @@ blackjack.Game.prototype.newRound = function() {
 };
 
 blackjack.Game.prototype.newGame = function() {
+	this.c[2].number.setText(200);
+	this.c[1].number.setText(400 - parseInt(this.c[2].number.getText()));
 	this.newRound();
 	this.shuffle();
-	//this.a = [0, 18, 5, 26, 2, 51, 50, 49, 48];
+	/*
+			1	2	3	4	5	6	7	8	9	10	11	12	13
+		1	0	1	2	3	4	5	6	7	8	9	10	11	12
+
+		2	13	14	15	16	17	18	19	20	21	22	23	24	25
+
+		3	26	27	28	29	30	31	32	33	34	35	36	37	38
+
+		4	39	40	41	42	43	44	45	46	47	48	49	50	51
+	*/
+	//this.a = [0, 18, 5, 26, 2, 39, 27, 0, 8];
 };
 
 blackjack.Game.prototype.draw = function(num, val) {
@@ -244,7 +262,7 @@ blackjack.Game.prototype.draw = function(num, val) {
 	}, false, this);
 	this.cards.number.setText(parseInt(this.cards.number.getText()) - 1);
 
-	for (var i = 0; i < this.layer[num].getNumberOfChildren(); i++) {
+	for (var i = 0, len = this.layer[num].getNumberOfChildren(); i < len; i++) {
 		if (this.layer[num].getChildAt(i).number1 == 'A' && this.layer[num].getChildAt(i).flower == '%u2660' && this.flag[0]) this.calculate(0, num, val);
 		if (this.layer[num].getChildAt(i).number1 == 'A' && this.layer[num].getChildAt(i).flower == '%u2663' && this.flag[1]) this.calculate(1, num, val);
 		if (this.layer[num].getChildAt(i).number1 == 'A' && this.layer[num].getChildAt(i).flower == '%u2665' && this.flag[2]) this.calculate(2, num, val);
@@ -271,10 +289,32 @@ blackjack.Game.prototype.shuffle = function() {
 };
 
 blackjack.Game.prototype.calculate = function(index, num, val) {
-	if (val == 0) this.flag[index] = false;
 	var points = parseInt(this.p[num].number.getText());
-	if (points > 21) points -= 10;
+	if (points > 21) {
+		points -= 10;
+		if (val == 0) this.flag[index] = false;
+	}
 	this.p[num].number.setText(points);
+};
+
+blackjack.Game.prototype.show = function(val, c) {
+	if (parseInt(this.c[1].number.getText()) <= 0) {
+		this.notice[7].runAction(new lime.animation.FadeTo(1));
+	} else if (parseInt(this.c[2].number.getText()) <= 0) {
+		this.notice[8].runAction(new lime.animation.FadeTo(1));
+	} else {
+		this.notice[val].runAction(new lime.animation.FadeTo(1));
+	}
+	this.notice[val].refresh(c);
+	this.timer[1].start();
+
+	var cache = parseInt(blackjack.getCookie('cache'));
+	if (cache != null && cache != '') {
+		cache = (cache > parseInt(this.c[2].number.getText()) ? cache : parseInt(this.c[2].number.getText()));
+	} else {
+		cache = parseInt(this.c[2].number.getText());
+	}
+	blackjack.setCookie('cache', cache, 365);
 };
 
 blackjack.Game.prototype.judge = function(num) {
@@ -283,28 +323,6 @@ blackjack.Game.prototype.judge = function(num) {
 	var c1 = parseInt(this.c[1].number.getText());
 	var c2 = parseInt(this.c[2].number.getText());
 	var c = parseInt(this.chip.l.getText());
-	this.show = function(val, c) {
-		if (c1 == 0) {
-			this.appendChild(this.notice[7].setOpacity(0));
-			this.notice[7].runAction(new lime.animation.FadeTo(1));
-		} else if (c2 == 0) {
-			this.appendChild(this.notice[8].setOpacity(0));
-			this.notice[8].runAction(new lime.animation.FadeTo(1));
-		} else {
-			this.appendChild(this.notice[val].setOpacity(0));
-			this.notice[val].runAction(new lime.animation.FadeTo(1));
-		}
-		this.notice[val].refresh(c);
-		this.timer[1].start();
-
-		var cache = parseInt(blackjack.getCookie('cache'));
-		if (cache != null && cache != '') {
-			cache = (cache > parseInt(this.c[2].number.getText()) ? cache : parseInt(this.c[2].number.getText()));
-		} else {
-			cache = parseInt(this.c[2].number.getText());
-		}
-		blackjack.setCookie('cache', cache, 365);
-	};
 	if (num == 2) {
 		if (p2 == 21) {
 			this.c[2].number.setText(c2 + c * 3);
@@ -315,7 +333,8 @@ blackjack.Game.prototype.judge = function(num) {
 			this.show(2, c);
 		}
 	} else if (num == 1) {
-		if (p1 >= 17 && p1 < 21) {
+		var lim = 17;
+		if (p1 >= lim && p1 < 21) {
 			if (p2 > p1) {
 				this.c[2].number.setText(c2 + c * 2);
 				this.show(0, c);
@@ -335,7 +354,7 @@ blackjack.Game.prototype.judge = function(num) {
 			this.c[2].number.setText(c2 + c * 2);
 			this.show(3, c);
 		}
-		if (p1 >= 17) {
+		if (p1 >= lim) {
 			this.timer[2].stop();
 			return 1;
 		}

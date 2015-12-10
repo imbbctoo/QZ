@@ -7,7 +7,7 @@ goog.require('lime.Sprite');
 dung2048.Notice = function(val) {
     lime.Layer.call(this);
 
-	var back = new lime.Sprite().setSize(320, 460).setFill(255, 255, 255).setOpacity(.7);
+	var back = new lime.Sprite().setSize(dung2048.director.getSize().width, dung2048.director.getSize().height).setFill(255, 255, 255).setOpacity(.7);
 	this.appendChild(back);
 
 	var lbl = [];

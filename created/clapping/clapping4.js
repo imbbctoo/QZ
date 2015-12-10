@@ -24,7 +24,7 @@ clapping.Notice = function() {
 	this.lbl4 = new lime.Label().setPosition(0, 50).setFontColor('#000').setSize(320, 12);
 	this.box.appendChild(this.lbl4);
 
-	this.box2 = new lime.Sprite().setSize(320, 460).setAnchorPoint(.5, .5).setFill('#FFF').setOpacity(.7);
+	this.box2 = new lime.Sprite().setSize(clapping.director.getSize().width, clapping.director.getSize().height).setAnchorPoint(.5, .5).setFill('#FFF').setOpacity(.7);
 
 	this.appendChild(this.box2);
 	this.appendChild(this.box.setPosition(0, -30));

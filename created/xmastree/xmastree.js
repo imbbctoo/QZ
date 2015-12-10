@@ -28,8 +28,8 @@ xmastree.start = function() {
 	director.makeMobileWebAppCapable();
 
 	var matrix = document.createElement('canvas');
-	matrix.height = director.getSize().height;
-	matrix.width = director.getSize().width;
+	matrix.height = h;
+	matrix.width = w;
 	scene.appendChild(matrix);
 
 	var context = matrix.getContext('2d');
@@ -47,8 +47,7 @@ xmastree.start = function() {
 		context.fillRect(0, 0, matrix.width, matrix.height);
 		context.fillStyle = '#0f0';
 		context.font = font_size + 'px';
-		var move = window.innerHeight / 460 * 4;
-		console.log(move);
+		var move = parseInt(window.innerHeight / 460 * 4);
 		for (var i = 0; i < columns; i++) {
 			for (var j = 0; j <= 3; j++) {
 				if (i == parseInt((columns - 1) / 2 + j) || i == parseInt((columns - 1) / 2 - j)) {

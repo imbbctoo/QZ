@@ -34,7 +34,7 @@ coloroids.Game = function() {
 
 	this.enemy = new coloroids.Enemy();
 
-	this.n = -2;
+	this.n = 0;
 
 	this.endRoundSound = new lime.audio.Audio('assets/end.mp3');
 	this.bounceSound = new lime.audio.Audio('assets/bounce.mp3');

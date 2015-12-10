@@ -28,7 +28,7 @@ blackbox.Game = function() {
 
 	this.unit = [];
 	for (var i = 0; i < 4; i++) {
-		this.unit[i] = new blackbox.Unit(45, i * 90);
+		this.unit[i] = new blackbox.Unit(45).setRotation(i * 90);
 	}
 
 	this.appendChild(this.unit[0].setPosition(-67, -77));

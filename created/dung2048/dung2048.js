@@ -72,7 +72,8 @@ dung2048.start = function() {
 
 	dung2048.game = new dung2048.Game();
 
-	goog.events.listen(tap, ['mousedown', 'touchstart'], function() {
+	goog.events.listen(tap, ['mousedown', 'touchstart'], function() {});
+	goog.events.listenOnce(tap, ['mousedown', 'touchstart'], function() {
 		var scene = new lime.Scene(),
 		layer = new lime.Layer().setPosition(dung2048.director.getSize().width / 2, dung2048.director.getSize().height / 2);
 

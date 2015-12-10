@@ -38,25 +38,29 @@ loverose.start = function() {
 		music.autoplay = 'autoplay';
 	}
 
-	var director = new lime.Director(document.body, 320, 500);
+	var w = 320;
+	var h = window.innerHeight / window.innerWidth * w;
+	h = h < 460 ? 460 : h;
+
+	var director = new lime.Director(document.body, w, h);
 	var scene = new lime.Scene();
 	var layerx = new lime.Layer();
-	scene.appendChild(layerx.setPosition(160, -250).setRotation(-10));
+	scene.appendChild(layerx.setPosition(w / 2 + 50, -h / 2 - 50).setRotation(-10));
 	var layer = [];
 	layer[0] = new lime.Layer();
-	layerx.appendChild(layer[0].setPosition(160, 250));
+	layerx.appendChild(layer[0].setPosition(w / 2, h / 2));
 	layer[1] = new lime.Layer().setRotation(-10);
-	layerx.appendChild(layer[1].setPosition(140, 250));
+	layerx.appendChild(layer[1].setPosition(w / 2, h / 2));
 	layer[2] = new lime.Layer().setRotation(-20);
-	layerx.appendChild(layer[2].setPosition(120, 250));
+	layerx.appendChild(layer[2].setPosition(w / 2, h / 2));
 	layer[3] = new lime.Layer().setRotation(-30);
-	layerx.appendChild(layer[3].setPosition(100, 250));
+	layerx.appendChild(layer[3].setPosition(w / 2, h / 2));
 	layer[4] = new lime.Layer().setRotation(-40);
-	layerx.appendChild(layer[4].setPosition(80, 250));
+	layerx.appendChild(layer[4].setPosition(w / 2, h / 2));
 	var layer1 = new lime.Layer();
-	scene.appendChild(layer1.setPosition(160 + 51, 250 + 30));
+	scene.appendChild(layer1.setPosition(w / 2 + 51, h / 2 + 30));
 	var layer2 = new lime.Layer();
-	scene.appendChild(layer2.setPosition(160 - 58, 250 + 5).setRotation(15));
+	scene.appendChild(layer2.setPosition(w / 2 - 58, h / 2 + 5).setRotation(15));
 
 	director.makeMobileWebAppCapable();
 
