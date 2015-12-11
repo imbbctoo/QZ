@@ -131,7 +131,7 @@ blackjack.Game = function(myMode) {
 	this.layer[4].appendChild(this.hit.setPosition(-70, 0));
 
 	goog.events.listen(this.hit, ['mousedown', 'touchstart'], function() {
-		if (!this.timer[1].enabled && parseInt(this.cards.number.getText()) > 9) this.draw(2, 0);
+		if (!this.timer[1].enabled) this.draw(2, 0);
 	}, false, this);
 
 	this.stand = new blackjack.Button().stand;
@@ -230,7 +230,7 @@ blackjack.Game.prototype.newGame = function() {
 
 		4	39	40	41	42	43	44	45	46	47	48	49	50	51
 	*/
-	//this.a = [0, 18, 5, 26, 2, 39, 27, 0, 8];
+	//this.a = [9, 8, 7, 6, 5, 4, 3, 2, 39, 26, 14, 1, 13, 0];
 };
 
 blackjack.Game.prototype.draw = function(num, val) {
