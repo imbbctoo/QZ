@@ -80,7 +80,7 @@ blackbox.Game = function() {
 	}, false, this);
 
 	this.notice = new blackbox.Notice();
-	this.appendChild(this.notice.setOpacity(1));
+	this.appendChild(this.notice.setOpacity(0));
 
 	this.chosen = [];
 
@@ -245,12 +245,10 @@ blackbox.Game.prototype.renew = function() {
 	this.mixed = false;
 	for (var i = 0; i < 4; i++) {
 		this.unit[i].setRotation(i * 90);
-		this.unit[i].runAction(
-			new lime.animation.Sequence(
-				new lime.animation.ScaleTo(.9).setDuration(.1),
-				new lime.animation.ScaleTo(1).setDuration(.1)
-			)
-		);
+		this.unit[i].runAction(new lime.animation.Sequence(
+			new lime.animation.ScaleTo(.9).setDuration(.1),
+			new lime.animation.ScaleTo(1).setDuration(.1)
+		));
 		this.q[i] = 0;
 		this.r[i] = 0;
 		this.key[i].setText(0);

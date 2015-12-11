@@ -37,11 +37,14 @@ blackjack.Game = function(myMode) {
 	this.timer[1] = new goog.Timer();
 	this.timer[2] = new goog.Timer(900);
 	this.timer[3] = new goog.Timer(300);
+	this.timer[4] = new goog.Timer(1100);
 
 	goog.events.listen(this.timer[2], 'tick', function() {
 		if (this.judge(1) == 1) return;
 		this.draw(1, 0);
 	}, false, this);
+
+	goog.events.listen(this.timer[4], 'tick', function() {this.stop();});
 
 	this.p = [];
 
@@ -161,15 +164,21 @@ blackjack.Game = function(myMode) {
 
 	for (var i = 0; i <= 6; i++) {
 		goog.events.listen(this.notice[i], ['mousedown', 'touchstart'], function() {
-			this.timer[0].stop();
-			this.newRound();
+			if (!this.timer[4].enabled) {
+				this.timer[4].start();
+				this.timer[0].stop();
+				this.newRound();
+			}
 		}, false, this);
 	}
 
 	for (var i = 7; i <= 8; i++) {
 		goog.events.listen(this.notice[i], ['mousedown', 'touchstart'], function() {
-			this.timer[0].stop();
-			this.newGame();
+			if (!this.timer[4].enabled) {
+				this.timer[4].start();
+				this.timer[0].stop();
+				this.newGame();
+			}
 		}, false, this);
 	}
 
