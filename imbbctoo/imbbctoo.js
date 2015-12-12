@@ -113,7 +113,7 @@ imbbctoo.start = function() {
 			} else {
 				imbbctoo.move = new lime.animation.MoveTo(imbbctoo.p, 0);
 			}
-			imbbctoo.move.setDuration(.5).setEasing(lime.animation.Easing.EASEOUT).addTarget(layerx).play();
+			imbbctoo.move.setDuration(.2).setEasing(lime.animation.Easing.EASEOUT).addTarget(layerx).play();
 
 			setTimeout(function() {imbbctoo.ctr.setPosition(w / 2, h / 2);}, 0);
 		});
