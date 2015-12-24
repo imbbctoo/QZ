@@ -43,6 +43,10 @@ loverose.start = function() {
 	h = h < 460 ? 460 : h;
 
 	var director = new lime.Director(document.body, w, h);
+
+	if (director.getPosition().y > 0) location.reload();
+
+	director.makeMobileWebAppCapable();
 	var scene = new lime.Scene();
 	var layerx = new lime.Layer();
 	scene.appendChild(layerx.setPosition(w / 2 + 50, -h / 2 - 50).setRotation(-10));
@@ -61,8 +65,6 @@ loverose.start = function() {
 	scene.appendChild(layer1.setPosition(w / 2 + 51, h / 2 + 30));
 	var layer2 = new lime.Layer();
 	scene.appendChild(layer2.setPosition(w / 2 - 58, h / 2 + 5).setRotation(15));
-
-	director.makeMobileWebAppCapable();
 
 	function encode(value) {
 		return unescape(value.replace(/&#x/g, '%u').replace(/;/g, ''));

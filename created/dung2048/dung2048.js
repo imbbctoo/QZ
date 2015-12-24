@@ -33,6 +33,9 @@ dung2048.start = function() {
 	h = h < 460 ? 460 : h;
 
 	dung2048.director = new lime.Director(document.body, w, h);
+
+	if (dung2048.director.getPosition().y > 0) location.reload();
+
 	dung2048.director.makeMobileWebAppCapable();
 
 	dung2048.lime = new imbbctoo.Lime(dung2048.director.getSize().width / 2, dung2048.director.getSize().height - 40);

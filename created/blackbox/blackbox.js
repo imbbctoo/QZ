@@ -27,6 +27,9 @@ blackbox.start = function() {
 	h = h < 460 ? 460 : h;
 
 	blackbox.director = new lime.Director(document.body, w, h);
+
+	if (blackbox.director.getPosition().y > 0) location.reload();
+
 	blackbox.director.makeMobileWebAppCapable();
 
 	blackbox.lime = new imbbctoo.Lime(blackbox.director.getSize().width / 2, blackbox.director.getSize().height - 40);

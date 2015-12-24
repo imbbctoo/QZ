@@ -33,11 +33,14 @@ myrose.start = function() {
 	}
 
 	var director = new lime.Director(document.body, 320, 500);
+
+	if (director.getPosition().y > 0) location.reload();
+
+	director.makeMobileWebAppCapable();
+
 	var scene = new lime.Scene();
 	var layer = new lime.Layer();
 	scene.appendChild(layer.setPosition(160, 250));
-
-	director.makeMobileWebAppCapable();
 
 	var color1 = '#f3a';
 	var color2 = '#5a6';

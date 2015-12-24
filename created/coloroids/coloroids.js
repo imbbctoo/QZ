@@ -23,6 +23,9 @@ coloroids.start = function() {
 	head.appendChild(style);
 
 	coloroids.director = new lime.Director(document.body, 320, 460);
+
+	if (coloroids.director.getPosition().y > 0) location.reload();
+
 	coloroids.director.makeMobileWebAppCapable();
 
 	coloroids.lime = new imbbctoo.Lime(coloroids.director.getSize().width / 2, coloroids.director.getSize().height - 40);

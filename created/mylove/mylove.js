@@ -35,11 +35,14 @@ mylove.start = function() {
 	}
 
 	var director = new lime.Director(document.body, 320, 500);
+
+	if (director.getPosition().y > 0) location.reload();
+
+	director.makeMobileWebAppCapable();
+
 	var scene = new lime.Scene();
 	var layer = new lime.Layer();
 	scene.appendChild(layer.setPosition(160, 250));
-
-	director.makeMobileWebAppCapable();
 
 	function encode(value) {
 		return unescape(value.replace(/&#x/g, '%u').replace(/;/g, ''));

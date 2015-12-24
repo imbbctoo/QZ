@@ -14,6 +14,9 @@ drumset.start = function() {
 	console.log('created by imbbctoo');
 
 	var director = new lime.Director(document.body, 500, 500);
+
+	if (director.getPosition().y > 0) location.reload();
+
 	var scene = new lime.Scene();
 	var layer = new lime.Layer();
 	var sprite = new lime.Sprite().setSize(director.getSize().width, director.getSize().height).setFill('assets/drumset.png');

@@ -62,7 +62,7 @@ clapping.start = function() {
 
 	var layer = new lime.Layer().setPosition(clapping.director.getSize().width / 2, clapping.director.getSize().height / 2);
 	scene.appendChild(layer);
-	
+
 	layer.appendChild(new lime.Sprite().setSize(clapping.director.getSize().width, clapping.director.getSize().height).setFill(255, 255, 255));
 
 	var lbl = new lime.Label().setSize(320, 12).setFontSize(40).setText(

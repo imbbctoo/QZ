@@ -38,6 +38,9 @@ blackjack.start = function() {
 	h = h < 460 ? 460 : h;
 
 	blackjack.director = new lime.Director(document.body, w, h);
+
+	if (blackjack.director.getPosition().y > 0) location.reload();
+
 	blackjack.director.makeMobileWebAppCapable();
 
 	blackjack.lime = new imbbctoo.Lime(blackjack.director.getSize().width / 2, blackjack.director.getSize().height - 40);
