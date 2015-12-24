@@ -77,7 +77,7 @@ imbbctoo.start = function() {
 
 	//imbbctoo.ctr.appendChild(new lime.Sprite().setSize(20, 20).setFill(255, 255, 0));
 
-	imbbctoo.p = 0;
+	imbbctoo.p = parseInt(imbbctoo.getCookie('p'));
 
 	goog.events.listen(imbbctoo.ctr, ['mousedown', 'touchstart'], function(e) {
 		e.startDrag(false, new goog.math.Box(-h, w * 2, h * 2, -w));
