@@ -36,6 +36,8 @@ imbbctoo.start = function() {
 
 	imbbctoo.director.makeMobileWebAppCapable();
 
+	if (imbbctoo.director.getPosition().y > 0) history.go(0);
+
 	var scene = new lime.Scene();
 	var layerx = new lime.Layer();
 	var layer = [];
