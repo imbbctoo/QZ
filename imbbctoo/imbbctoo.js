@@ -44,7 +44,7 @@ imbbctoo.start = function() {
 
 	scene.appendChild(new lime.Sprite().setSize(w, h).setFill(new lime.fill.LinearGradient().addColorStop(0, '#34c').addColorStop(1, '#0ae')).setPosition(w / 2, h / 2));
 	scene.appendChild(new lime.Label().setText('WELCOME TO MY WORLD!').setFontColor('#fff').setFontSize(20).setPosition(w / 2, h / 460 * 20).setSize(320, 12));
-	scene.appendChild(layerx);
+	scene.appendChild(layerx.setPosition(parseInt(imbbctoo.getCookie('p')), 0));
 
 	imbbctoo.x0 = 17.5;
 	imbbctoo.y0 = h / 460 * 60;
@@ -98,7 +98,6 @@ imbbctoo.start = function() {
 						imbbctoo.p = w * (i + 1);
 						var lim = 0;
 						if (imbbctoo.p >= lim) imbbctoo.p = lim;
-						imbbctoo.move = new lime.animation.MoveTo(imbbctoo.p, 0);
 						break;
 					}
 				}
@@ -108,13 +107,12 @@ imbbctoo.start = function() {
 						imbbctoo.p = w * (i - 1);
 						var lim = w * (1 - len);
 						if (imbbctoo.p <= lim) imbbctoo.p = lim;
-						imbbctoo.move = new lime.animation.MoveTo(imbbctoo.p, 0);
 						break;
 					}
 				}
-			} else {
-				imbbctoo.move = new lime.animation.MoveTo(imbbctoo.p, 0);
 			}
+			imbbctoo.move = new lime.animation.MoveTo(imbbctoo.p, 0);
+			imbbctoo.setCookie('p', imbbctoo.p, 365);
 			imbbctoo.move.setDuration(.2).setEasing(lime.animation.Easing.EASEOUT).addTarget(layerx).play();
 
 			setTimeout(function() {imbbctoo.ctr.setPosition(w / 2, h / 2);}, 0);
@@ -187,6 +185,26 @@ imbbctoo.showup = function(icon, a, e, d) {
 			}
 		});
 	}
+};
+
+imbbctoo.getCookie = function(c_name) {
+	if (document.cookie.length > 0) {
+		c_start = document.cookie.indexOf(c_name + '=');
+		if (c_start != -1) {
+			c_start = c_start + c_name.length + 1;
+			c_end = document.cookie.indexOf(';', c_start);
+			if (c_end == -1) c_end = document.cookie.length;
+			return unescape(document.cookie.substring(c_start, c_end));
+		}
+	}
+	return 0;
+};
+
+imbbctoo.setCookie = function(c_name, value, expiredays) {
+	var exdate = new Date();
+	exdate.setDate(exdate.getDate() + expiredays);
+	document.cookie = c_name + '=' + escape(value) +
+	((expiredays == null) ? '' : ';expires=' + exdate.toGMTString());
 };
 
 goog.exportSymbol('imbbctoo.start', imbbctoo.start);
