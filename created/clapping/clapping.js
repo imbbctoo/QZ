@@ -33,6 +33,9 @@ clapping.start = function() {
 	h = h < 460 ? 460 : h;
 
 	clapping.director = new lime.Director(document.body, w, h);
+
+	if (clapping.director.getPosition().y > 0) location.reload();
+
 	clapping.director.makeMobileWebAppCapable();
 
 	clapping.lime = new imbbctoo.Lime(clapping.director.getSize().width / 2, clapping.director.getSize().height - 40);

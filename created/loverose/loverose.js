@@ -47,6 +47,7 @@ loverose.start = function() {
 	if (director.getPosition().y > 0) location.reload();
 
 	director.makeMobileWebAppCapable();
+
 	var scene = new lime.Scene();
 	var layerx = new lime.Layer();
 	scene.appendChild(layerx.setPosition(w / 2 + 50, -h / 2 - 50).setRotation(-10));
