@@ -34,8 +34,6 @@ myrose.start = function() {
 
 	var director = new lime.Director(document.body, 320, 500);
 
-	if (director.getPosition().y > 0) location.reload();
-
 	director.makeMobileWebAppCapable();
 
 	var scene = new lime.Scene();
