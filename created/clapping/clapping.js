@@ -104,8 +104,6 @@ clapping.start = function() {
 
 	layer.appendChild(new lime.Label().setSize(320, 12).setText('BEST SCORE').setPosition(0, -60));
 
-	clapping.director.makeMobileWebAppCapable();
-
 	clapping.lime.builtWithLime(scene);
 
 	clapping.director.replaceScene(scene);

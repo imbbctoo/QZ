@@ -94,8 +94,6 @@ numrubik.start = function() {
 
 	layer.appendChild(new numrubik.Table());
 
-	numrubik.director.makeMobileWebAppCapable();
-
 	numrubik.lime.builtWithLime(scene);
 
 	numrubik.director.replaceScene(scene, lime.transitions.SlideIn);

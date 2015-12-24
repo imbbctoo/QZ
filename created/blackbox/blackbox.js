@@ -47,8 +47,6 @@ blackbox.start = function() {
 	});
 	layer.appendChild(btn);
 
-	blackbox.director.makeMobileWebAppCapable();
-
 	blackbox.lime.builtWithLime(scene);
 
 	blackbox.director.replaceScene(scene);

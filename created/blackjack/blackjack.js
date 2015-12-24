@@ -124,8 +124,6 @@ blackjack.start = function() {
 
 	blackjack.myScore = 0;
 
-	blackjack.director.makeMobileWebAppCapable();
-
 	blackjack.lime.builtWithLime(scene);
 
 	blackjack.director.replaceScene(scene);

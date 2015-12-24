@@ -25,6 +25,9 @@ meteor.start = function() {
 	head.appendChild(style);
 
 	var director = new lime.Director(document.body, 320, 500);
+
+	director.makeMobileWebAppCapable();
+
 	var scene = new lime.Scene();
 	var layerx = new lime.Layer();
 	scene.appendChild(layerx.setPosition(160, -250).setRotation(-10));
@@ -39,8 +42,6 @@ meteor.start = function() {
 	layerx.appendChild(layer[3].setPosition(100, 250));
 	layer[4] = new lime.Layer().setRotation(-40);
 	layerx.appendChild(layer[4].setPosition(80, 250));
-
-	director.makeMobileWebAppCapable();
 
 	var a = 160;
 	var b = 120;

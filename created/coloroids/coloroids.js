@@ -41,8 +41,6 @@ coloroids.start = function() {
 	});
 	layer.appendChild(btn);
 
-	coloroids.director.makeMobileWebAppCapable();
-
 	coloroids.lime.builtWithLime(scene);
 
 	coloroids.director.replaceScene(scene);

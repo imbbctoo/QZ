@@ -105,8 +105,6 @@ dung2048.start = function() {
 
 	dung2048.myScore = 0;
 
-	dung2048.director.makeMobileWebAppCapable();
-
 	dung2048.lime.builtWithLime(scene);
 
 	dung2048.director.replaceScene(scene);
