@@ -36,8 +36,6 @@ clapping.start = function() {
 
 	if (clapping.director.getPosition().y > 0) location.reload();
 
-	clapping.director.makeMobileWebAppCapable();
-
 	clapping.lime = new imbbctoo.Lime(clapping.director.getSize().width / 2, clapping.director.getSize().height - 40);
 
 	clapping.reloadSound = new lime.audio.Audio('assets/gunpickup2.mp3');

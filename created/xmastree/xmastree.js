@@ -26,8 +26,6 @@ xmastree.start = function() {
 
 	if (director.getPosition().y > 0) location.reload();
 
-	director.makeMobileWebAppCapable();
-
 	var scene = new lime.Scene();
 
 	var matrix = document.createElement('canvas');

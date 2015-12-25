@@ -41,8 +41,6 @@ blackjack.start = function() {
 
 	if (blackjack.director.getPosition().y > 0) location.reload();
 
-	blackjack.director.makeMobileWebAppCapable();
-
 	blackjack.lime = new imbbctoo.Lime(blackjack.director.getSize().width / 2, blackjack.director.getSize().height - 40);
 
 	var scene = new lime.Scene();

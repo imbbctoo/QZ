@@ -36,8 +36,6 @@ dung2048.start = function() {
 
 	if (dung2048.director.getPosition().y > 0) location.reload();
 
-	dung2048.director.makeMobileWebAppCapable();
-
 	dung2048.lime = new imbbctoo.Lime(dung2048.director.getSize().width / 2, dung2048.director.getSize().height - 40);
 
 	var scene = new lime.Scene();

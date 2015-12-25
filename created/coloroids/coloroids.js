@@ -24,8 +24,6 @@ coloroids.start = function() {
 
 	coloroids.director = new lime.Director(document.body, 320, 460);
 
-	coloroids.director.makeMobileWebAppCapable();
-
 	coloroids.lime = new imbbctoo.Lime(coloroids.director.getSize().width / 2, coloroids.director.getSize().height - 40);
 
 	var scene = new lime.Scene();

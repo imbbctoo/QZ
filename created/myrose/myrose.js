@@ -34,8 +34,6 @@ myrose.start = function() {
 
 	var director = new lime.Director(document.body, 320, 500);
 
-	director.makeMobileWebAppCapable();
-
 	var scene = new lime.Scene();
 	var layer = new lime.Layer();
 	scene.appendChild(layer.setPosition(160, 250));

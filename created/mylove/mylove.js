@@ -38,8 +38,6 @@ mylove.start = function() {
 
 	if (director.getPosition().y > 0) location.reload();
 
-	director.makeMobileWebAppCapable();
-
 	var scene = new lime.Scene();
 	var layer = new lime.Layer();
 	scene.appendChild(layer.setPosition(160, 250));

@@ -23,8 +23,6 @@ numrubik.start = function() {
 
 	if (numrubik.director.getPosition().y > 0) location.reload();
 
-	numrubik.director.makeMobileWebAppCapable();
-
 	numrubik.lime = new imbbctoo.Lime(numrubik.director.getSize().width / 2, numrubik.director.getSize().height - 40);
 
 	var scene = new lime.Scene();
