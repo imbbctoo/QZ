@@ -51,5 +51,15 @@ loverose.Function = function() {
 	this.y[18] = -0.0721 * Math.pow(this.x[18], 2) + 2.5668 * this.x[18] + 123.46;
 	this.y[19] = 0.06 * Math.pow(this.x[19], 2) - 3.9 * this.x[19] + 190;
 	this.y[20] = -0.016 * Math.pow(this.x[20], 2) + 0.5209 * this.x[20] + 159.9;
+	
+	
+	this.x[21] = Math.random() * 86 - 100;//-14
+	this.x[22] = Math.random() * 40 - 10;//30
+	this.x[23] = Math.random() * 7 - 22;//-15
+	this.x[24] = Math.random() * 62 - 22;//40
+	this.y[21] = -0.0127 * Math.pow(this.x[21], 2) - 1.4717 * this.x[21] - 50.805;
+	this.y[22] = -0.0336 * Math.pow(this.x[22], 2) + 2.2414 * this.x[22] - 20.943;
+	this.y[23] = -1.2503 * Math.pow(this.x[23], 2) - 38.76 * this.x[23] - 235.09;
+	this.y[24] = -0.0006 * Math.pow(this.x[24], 3) + 0.0494 * Math.pow(this.x[24], 2) - 2.5777 * this.x[24] - 74.512;
 };
 goog.inherits(loverose.Function, lime.Layer);

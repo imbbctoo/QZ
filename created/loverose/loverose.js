@@ -16,7 +16,7 @@ loverose.start = function() {
 	console.log('created by imbbctoo');
 
 	var mode = 1;
-	var flag1 = 0;
+	var flag1 = 1;
 	var sound = 1;
 	var flag2 = 0;
 
@@ -153,20 +153,18 @@ loverose.start = function() {
 	}
 
 	var name2 = ['0', '1'];
-	if (flag2) {
-		var name2 = [encode('&#x2661;'), encode('&#x2661;')];
-	}
+	if (flag2) var name2 = [encode('&#x2661;'), encode('&#x2661;')];
 
 	var color3 = '#45d';
 	var color4 = '#5a6';
 
 	function step2() {
 		var coordinate = new loverose.Function();
-		var r = parseInt(Math.random() * 21);
-		var l1 = new lime.Label().setText(name2[parseInt(Math.random() * 2)]).setFontSize(1).setFontColor(r < 4 ? color4 : color3).setSize(320, 12);
-		var x = coordinate.x[r];
-		var y = coordinate.y[r];
-		layer2.appendChild(l1.setPosition(x, -y).setOpacity(0).setFontSize(Math.random() * 4 + 12));
+		var r = parseInt(Math.random() * 25);
+		var l1 = new lime.Label().setText(name2[parseInt(Math.random() * 2)]).setFontSize(1).setFontColor(r < 4 || r > 20 ? color4 : color3).setSize(320, 12);
+		var x = parseInt(coordinate.x[r]);
+		var y = parseInt(coordinate.y[r]);
+		layer2.appendChild(l1.setPosition(x, -y).setOpacity(0).setFontSize(Math.random() * 5 + 10));
 		var anime = new lime.animation.Sequence(
 			new lime.animation.FadeTo(1).setDuration(1),
 			new lime.animation.Delay().setDuration(15),
@@ -206,9 +204,9 @@ loverose.start = function() {
 		anime.play();
 	}
 
-	setInterval(function() {step1(a, b);}, 150);
-	setInterval(step2, 25);
-	setInterval(step3, 50);
+	setInterval(function() {step1(a, b);}, 170);
+	setInterval(step2, 20);
+	setInterval(step3, 30);
 
 	scene.appendChild(new lime.Sprite().setSize(960, 1500).setFill(0, 0, 0).setOpacity(.1));
 
