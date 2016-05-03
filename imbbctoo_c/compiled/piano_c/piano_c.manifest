@@ -1,0 +1,31 @@
+CACHE MANIFEST
+
+# If you use more files you need to manually list them here.
+# Don't remove next line
+# Updated on: 2016-05-03 17:31:27
+
+piano_c.js
+assets/startup.jpg
+assets/startup_ipad.jpg
+assets/icon.png
+assets/d1.mp3
+assets/d2.mp3
+assets/d3.mp3
+assets/d4.mp3
+assets/d5.mp3
+assets/d6.mp3
+assets/d7.mp3
+assets/d8.mp3
+assets/p_1.mp3
+assets/p0.mp3
+assets/p1.mp3
+assets/p2.mp3
+assets/p3.mp3
+assets/p4.mp3
+assets/p5.mp3
+assets/p6.mp3
+assets/p7.mp3
+assets/p8.mp3
+
+NETWORK:
+*

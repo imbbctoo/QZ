@@ -1,0 +1,1 @@
+python ../../bin/lime.py build piano -o ../../compiled/piano_c/piano_c.js -a -p piano.start

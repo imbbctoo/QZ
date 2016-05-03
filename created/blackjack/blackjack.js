@@ -41,27 +41,27 @@ blackjack.start = function() {
 
 	if (blackjack.director.getPosition().y > 0) location.reload();
 
-	blackjack.lime = new imbbctoo.Lime(blackjack.director.getSize().width / 2, blackjack.director.getSize().height - 40);
+	blackjack.lime = new imbbctoo.Lime(w / 2, h - 40);
 
 	var scene = new lime.Scene();
 
-	var layer = new lime.Layer().setPosition(blackjack.director.getSize().width / 2, blackjack.director.getSize().height / 2);
+	var layer = new lime.Layer().setPosition(w / 2, h / 2);
 	scene.appendChild(layer);
 
-	layer.appendChild(new lime.Sprite().setSize(blackjack.director.getSize().width, blackjack.director.getSize().height).setFill(0, 0, 0));
+	layer.appendChild(new lime.Sprite().setSize(w, h).setFill(0, 0, 0));
 
-	var w = 430;
-	var h = 550;
+	var w0 = 430;
+	var h0 = 550;
 	var r = 9 / 10;
 	var table = new lime.Layer();
 	layer.appendChild(table.setPosition(0, -30));
-	table.appendChild(new lime.Circle().setFill(136, 0, 21).setSize(w, h).setPosition(0, 15));
-	table.appendChild(new lime.Circle().setFill(185, 122, 87).setSize(w, h));
-	table.appendChild(new lime.Circle().setFill(136, 0, 21).setSize(w * r, h * r).setPosition(0, -12));
-	table.appendChild(new lime.Circle().setFill(0, 0, 0).setSize(w * r + 2, h * r + 2));
+	table.appendChild(new lime.Circle().setFill(136, 0, 21).setSize(w0, h0).setPosition(0, 15));
+	table.appendChild(new lime.Circle().setFill(185, 122, 87).setSize(w0, h0));
+	table.appendChild(new lime.Circle().setFill(136, 0, 21).setSize(w0 * r, h0 * r).setPosition(0, -12));
+	table.appendChild(new lime.Circle().setFill(0, 0, 0).setSize(w0 * r + 2, h0 * r + 2));
 	var back = new lime.fill.LinearGradient().addColorStop(0, '#2b4').addColorStop(1, '#183');
-	table.appendChild(new lime.Circle().setFill(back).setSize(w * r, h * r));
-	layer.appendChild(new lime.Sprite().setSize(blackjack.director.getSize().width, blackjack.director.getSize().height).setFill(255, 255, 255).setOpacity(.7));
+	table.appendChild(new lime.Circle().setFill(back).setSize(w0 * r, h0 * r));
+	layer.appendChild(new lime.Sprite().setSize(w, h).setFill(255, 255, 255).setOpacity(.7));
 
 	layer.appendChild(new lime.Label().setSize(320, 12).setFontSize(50).setText('Black Jack').setPosition(0, -140));
 
@@ -71,12 +71,12 @@ blackjack.start = function() {
 
 	layer.appendChild(new lime.Label().setSize(320, 12).setText('connet me: kakalas@sohu.com').setPosition(0, 150));
 
-	var tap = new lime.Sprite().setSize(blackjack.director.getSize().width, blackjack.director.getSize().height);
+	var tap = new lime.Sprite().setSize(w, h);
 	layer.appendChild(tap);
 
 	tap.appendChild(new lime.Label().setSize(320, 12).setText('Tap to start').setFontSize(20).setPosition(0, 50));
 
-	layer.appendChild(new lime.Sprite().setSize(blackjack.director.getSize().width, blackjack.director.getSize().height).setFill(255, 255, 255).setOpacity(.1));
+	layer.appendChild(new lime.Sprite().setSize(w, h).setFill(255, 255, 255).setOpacity(.1));
 
 	var action1 = new lime.animation.Loop(
 		new lime.animation.Sequence(
@@ -95,7 +95,7 @@ blackjack.start = function() {
 
 		var scene = new lime.Scene();
 
-		var layer = new lime.Layer().setPosition(blackjack.director.getSize().width / 2, blackjack.director.getSize().height / 2);
+		var layer = new lime.Layer().setPosition(w / 2, h / 2);
 
 		scene.appendChild(layer);
 

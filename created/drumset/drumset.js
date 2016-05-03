@@ -14,14 +14,16 @@ drumset.start = function() {
 	console.log('created by imbbctoo');
 
 	var director = new lime.Director(document.body, 500, 500);
+	var w = director.getSize().width;
+	var h = director.getSize().height;
 
 	if (director.getPosition().y > 0) location.reload();
 
 	var scene = new lime.Scene();
 	var layer = new lime.Layer();
-	var sprite = new lime.Sprite().setSize(director.getSize().width, director.getSize().height).setFill('assets/drumset.png');
+	var sprite = new lime.Sprite().setSize(w, h).setFill('assets/drumset.png');
 
-	scene.appendChild(layer.setPosition(director.getSize().width / 2, director.getSize().height / 2));
+	scene.appendChild(layer.setPosition(w / 2, h / 2));
 	layer.appendChild(sprite);
 
 	var num = 30;
@@ -63,7 +65,7 @@ drumset.start = function() {
 		gb[i] = new lime.audio.Audio('assets/gb.mp3');
 	}
 
-	var mask = new lime.Sprite().setSize(502, 502).setFill(255, 255, 255).appendChild(new lime.Label().setText('LOADING>>>'));
+	var mask = new lime.Sprite().setSize(w + 2, h + 2).setFill(255, 255, 255).appendChild(new lime.Label().setText('LOADING>>>'));
 	layer.appendChild(mask);
 
 	mask.runAction(new lime.animation.Sequence(
@@ -123,52 +125,54 @@ drumset.start = function() {
 
 	goog.events.listen(sprite, 'keydown', function() {
 		console.log('keycode: ' + event.which);
-		if (event.which == 83 || event.which == 74) {
-			jg[jg_n].stop();
-			jg[jg_n].play();
-		}
-		if (event.which == 65 || event.which == 72) {
-			if (event.shiftKey) {
-				kc[kc_n].stop();
-				kc[kc_n].play();
-			} else {
+		try {
+			if (event.which == 83 || event.which == 74) {
+				jg[jg_n].stop();
+				jg[jg_n].play();
+			}
+			if (event.which == 65 || event.which == 72) {
+				if (event.shiftKey) {
+					kc[kc_n].stop();
+					kc[kc_n].play();
+				} else {
+					bc[bc_n].stop();
+					bc[bc_n].play();
+				}
 				bc[bc_n].stop();
 				bc[bc_n].play();
 			}
-			bc[bc_n].stop();
-			bc[bc_n].play();
-		}
-		if (event.which == 32) {
-			ldt[ldt_n].stop();
-			ldt[ldt_n].play();
-		}
-		if (event.which == 87 || event.which == 85) {
-			dc[dc_n].stop();
-			dc[dc_n].play();
-		}
-		if (event.which == 16) {
-			if (event.shiftKey) kc[kc_n == 0 ? 0 : --kc_n].stop();
-		}
-		if (event.which == 82 || event.which == 79) {
-			ddc[ddc_n].stop();
-			ddc[ddc_n].play();
-		}
-		if (event.which == 69 || event.which == 73) {
-			t1[t1_n].stop();
-			t1[t1_n].play();
-		}
-		if (event.which == 68 || event.which == 75) {
-			t2[t2_n].stop();
-			t2[t2_n].play();
-		}
-		if (event.which == 70 || event.which == 76) {
-			t3[t3_n].stop();
-			t3[t3_n].play();
-		}
-		if (event.which == 88) {
-			gb[gb_n].stop();
-			gb[gb_n].play();
-		}
+			if (event.which == 32) {
+				ldt[ldt_n].stop();
+				ldt[ldt_n].play();
+			}
+			if (event.which == 87 || event.which == 85) {
+				dc[dc_n].stop();
+				dc[dc_n].play();
+			}
+			if (event.which == 16) {
+				if (event.shiftKey) kc[kc_n == 0 ? 0 : --kc_n].stop();
+			}
+			if (event.which == 82 || event.which == 79) {
+				ddc[ddc_n].stop();
+				ddc[ddc_n].play();
+			}
+			if (event.which == 69 || event.which == 73) {
+				t1[t1_n].stop();
+				t1[t1_n].play();
+			}
+			if (event.which == 68 || event.which == 75) {
+				t2[t2_n].stop();
+				t2[t2_n].play();
+			}
+			if (event.which == 70 || event.which == 76) {
+				t3[t3_n].stop();
+				t3[t3_n].play();
+			}
+			if (event.which == 88) {
+				gb[gb_n].stop();
+				gb[gb_n].play();
+			}
+		} catch (e) {}
 	});
 
 	director.replaceScene(scene);
