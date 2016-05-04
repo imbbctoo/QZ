@@ -57,7 +57,7 @@ imbbctoo.start = function() {
 
 	name[0] = ['coloroids', 'numrubik', 'blackbox', 'clapping', 'dung2048', 'blackjack'];
 	name[1] = ['xmastree', 'mylove', 'myrose', 'loverose'];
-	name[2] = ['drumset'];
+	name[2] = ['drumset', 'piano'];
 
 	title[0] = 'web app games';
 	title[1] = 'web effects';

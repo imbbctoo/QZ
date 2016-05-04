@@ -13,15 +13,17 @@ goog.require('lime.audio.Audio');
 piano.start = function() {
 	console.log('created by imbbctoo');
 
-	var director = new lime.Director(document.body, 900, 500);
+	var director = new lime.Director(document.body, window.innerWidth, window.innerHeight);
 	var w = director.getSize().width;
 	var h = director.getSize().height;
+
+	a = w > h / 500 * 900 ? h / 500 * 900 : w;
 
 	if (director.getPosition().y > 0) location.reload();
 
 	var scene = new lime.Scene();
 	var layer = new lime.Layer();
-	var sprite = new lime.Sprite().setSize(w, h).setFill('assets/piano.png');
+	var sprite = new lime.Sprite().setSize(a, a / 900 * 500).setFill('assets/piano.png');
 
 	scene.appendChild(layer.setPosition(w / 2, h / 2));
 	layer.appendChild(sprite);
@@ -90,15 +92,17 @@ piano.start = function() {
 	var n1 = [65, 83, 68, 70, 71, 72, 74, 75, 76, 186];
 	var n2 = [81, 87, 82, 84, 85, 73, 79, 219];
 
-	layer.appendChild(new lime.Label().setText('for Miss SAS').setFontSize(5).setSize(190, 5).setFontColor(19, 19, 19).setPosition(240, 190));
-
 	var mask = new lime.Sprite().setSize(w + 2, h + 2).setFill(255, 255, 255).appendChild(new lime.Label().setText('LOADING>>>'));
 	layer.appendChild(mask);
 
 	mask.runAction(new lime.animation.Sequence(
-		new lime.animation.Delay().setDuration(7),
+		new lime.animation.Delay().setDuration(6),
 		new lime.animation.FadeTo(0)
 	));
+
+	var input = document.createElement('input');
+
+	goog.events.listen(sprite, ['mousedown', 'touchstart'], function() {input.focus();});
 
 	goog.events.listen(sprite, 'keyup', function() {
 		if (event.which == n1[0]) {
