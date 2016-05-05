@@ -17,7 +17,7 @@ piano.start = function() {
 	var w = director.getSize().width;
 	var h = director.getSize().height;
 
-	a = w > h / 500 * 900 ? h / 500 * 900 : w;
+	var a = w > h / 500 * 900 ? h / 500 * 900 : w;
 
 	if (director.getPosition().y > 0) location.reload();
 
@@ -26,9 +26,27 @@ piano.start = function() {
 	var sprite = new lime.Sprite().setSize(a, a / 900 * 500).setFill('assets/piano.png');
 
 	scene.appendChild(layer.setPosition(w / 2, h / 2));
+
 	layer.appendChild(sprite);
 
-	var num = 30;
+	var l = new lime.Layer();
+
+	var input = document.createElement('input');
+	l.appendChild(input);
+
+	l.appendChild(new lime.Sprite().setFill(255, 255, 255).setSize(w, h).setPosition(-w / 4, -h / 4));
+
+	layer.appendChild(l.setPosition(-w / 2, -h / 2));
+
+	var mask = new lime.Sprite().setSize(w + 2, h + 2).setFill(255, 255, 255).appendChild(new lime.Label().setText('LOADING>>>'));
+	layer.appendChild(mask);
+
+	mask.runAction(new lime.animation.Sequence(
+		new lime.animation.Delay().setDuration(6),
+		new lime.animation.FadeTo(0)
+	));
+
+	var num = 15;
 
 	var d1 = [];
 	var d2 = [];
@@ -92,16 +110,6 @@ piano.start = function() {
 	var n1 = [65, 83, 68, 70, 71, 72, 74, 75, 76, 186];
 	var n2 = [81, 87, 82, 84, 85, 73, 79, 219];
 
-	var mask = new lime.Sprite().setSize(w + 2, h + 2).setFill(255, 255, 255).appendChild(new lime.Label().setText('LOADING>>>'));
-	layer.appendChild(mask);
-
-	mask.runAction(new lime.animation.Sequence(
-		new lime.animation.Delay().setDuration(6),
-		new lime.animation.FadeTo(0)
-	));
-
-	var input = document.createElement('input');
-
 	goog.events.listen(sprite, ['mousedown', 'touchstart'], function() {input.focus();});
 
 	goog.events.listen(sprite, 'keyup', function() {
@@ -145,7 +153,7 @@ piano.start = function() {
 			p8_n++;
 			if (p8_n > num - 1) p8_n = 0;
 		}
-		/////////////////////////////////////////////////////
+		/**/
 		if (event.which == n2[0]) {
 			d1_n++;
 			if (d1_n > num - 1) d1_n = 0;
@@ -181,82 +189,80 @@ piano.start = function() {
 	});
 
 	goog.events.listen(sprite, 'keydown', function() {
-		try {
-			console.log('keycode: ' + event.which);
-			if (event.which == n1[0]) {
-				p_1[p_1_n].stop();
-				p_1[p_1_n].play();
-			}
-			if (event.which == n1[1]) {
-				p0[p0_n].stop();
-				p0[p0_n].play();
-			}
-			if (event.which == n1[2]) {
-				p1[p1_n].stop();
-				p1[p1_n].play();
-			}
-			if (event.which == n1[3]) {
-				p2[p2_n].stop();
-				p2[p2_n].play();
-			}
-			if (event.which == n1[4]) {
-				p3[p3_n].stop();
-				p3[p3_n].play();
-			}
-			if (event.which == n1[5]) {
-				p4[p4_n].stop();
-				p4[p4_n].play();
-			}
-			if (event.which == n1[6]) {
-				p5[p5_n].stop();
-				p5[p5_n].play();
-			}
-			if (event.which == n1[7]) {
-				p6[p6_n].stop();
-				p6[p6_n].play();
-			}
-			if (event.which == n1[8]) {
-				p7[p7_n].stop();
-				p7[p7_n].play();
-			}
-			if (event.which == n1[9]) {
-				p8[p8_n].stop();
-				p8[p8_n].play();
-			}
-			///////////////////////////////////////////////
-			if (event.which == n2[0]) {
-				d1[d1_n].stop();
-				d1[d1_n].play();
-			}
-			if (event.which == n2[1]) {
-				d2[d2_n].stop();
-				d2[d2_n].play();
-			}
-			if (event.which == n2[2]) {
-				d3[d3_n].stop();
-				d3[d3_n].play();
-			}
-			if (event.which == n2[3]) {
-				d4[d4_n].stop();
-				d4[d4_n].play();
-			}
-			if (event.which == n2[4]) {
-				d5[d5_n].stop();
-				d5[d5_n].play();
-			}
-			if (event.which == n2[5]) {
-				d6[d6_n].stop();
-				d6[d6_n].play();
-			}
-			if (event.which == n2[6]) {
-				d7[d7_n].stop();
-				d7[d7_n].play();
-			}
-			if (event.which == n2[7]) {
-				d8[d8_n].stop();
-				d8[d8_n].play();
-			}
-		} catch (e) {}
+		console.log('keycode: ' + event.which);
+		if (event.which == n1[0]) {
+			p_1[p_1_n].stop();
+			p_1[p_1_n].play();
+		}
+		if (event.which == n1[1]) {
+			p0[p0_n].stop();
+			p0[p0_n].play();
+		}
+		if (event.which == n1[2]) {
+			p1[p1_n].stop();
+			p1[p1_n].play();
+		}
+		if (event.which == n1[3]) {
+			p2[p2_n].stop();
+			p2[p2_n].play();
+		}
+		if (event.which == n1[4]) {
+			p3[p3_n].stop();
+			p3[p3_n].play();
+		}
+		if (event.which == n1[5]) {
+			p4[p4_n].stop();
+			p4[p4_n].play();
+		}
+		if (event.which == n1[6]) {
+			p5[p5_n].stop();
+			p5[p5_n].play();
+		}
+		if (event.which == n1[7]) {
+			p6[p6_n].stop();
+			p6[p6_n].play();
+		}
+		if (event.which == n1[8]) {
+			p7[p7_n].stop();
+			p7[p7_n].play();
+		}
+		if (event.which == n1[9]) {
+			p8[p8_n].stop();
+			p8[p8_n].play();
+		}
+		/**/
+		if (event.which == n2[0]) {
+			d1[d1_n].stop();
+			d1[d1_n].play();
+		}
+		if (event.which == n2[1]) {
+			d2[d2_n].stop();
+			d2[d2_n].play();
+		}
+		if (event.which == n2[2]) {
+			d3[d3_n].stop();
+			d3[d3_n].play();
+		}
+		if (event.which == n2[3]) {
+			d4[d4_n].stop();
+			d4[d4_n].play();
+		}
+		if (event.which == n2[4]) {
+			d5[d5_n].stop();
+			d5[d5_n].play();
+		}
+		if (event.which == n2[5]) {
+			d6[d6_n].stop();
+			d6[d6_n].play();
+		}
+		if (event.which == n2[6]) {
+			d7[d7_n].stop();
+			d7[d7_n].play();
+		}
+		if (event.which == n2[7]) {
+			d8[d8_n].stop();
+			d8[d8_n].play();
+		}
 	});
 
 	director.replaceScene(scene);
