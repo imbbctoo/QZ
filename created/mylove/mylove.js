@@ -42,19 +42,15 @@ mylove.start = function() {
 	var layer = new lime.Layer();
 	scene.appendChild(layer.setPosition(160, 250));
 
-	function encode(value) {
-		return unescape(value.replace(/&#x/g, '%u').replace(/;/g, ''));
-	}
-
 	if (mode == 1) {
 		var name = 'demo';
 		if (flag) {
-			var name = encode('&#x540D;&#x5B57;');
+			var name = unescape('%u540D%u5B57');
 		}
 	} else if (mode == 2) {
 		var name = ['Jack', 'Jill'];
 		if (flag) {
-			var name = [encode('&#x7537;&#x5B69;'), encode('&#x5973;&#x5B69;')];
+			var name = [unescape('%u7537%u5B69'), unescape('%u5973%u5B69')];
 		}
 	}
 

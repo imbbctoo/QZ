@@ -16,7 +16,7 @@ loverose.start = function() {
 	console.log('created by imbbctoo');
 
 	var mode = 1;
-	var flag1 = 1;
+	var flag1 = 0;
 	var sound = 1;
 	var flag2 = 0;
 
@@ -65,19 +65,15 @@ loverose.start = function() {
 	var layer2 = new lime.Layer();
 	scene.appendChild(layer2.setPosition(w / 2 - 58, h / 2 + 5).setRotation(15));
 
-	function encode(value) {
-		return unescape(value.replace(/&#x/g, '%u').replace(/;/g, ''));
-	}
-
 	if (mode == 1) {
 		var name1 = 'demo';
 		if (flag1) {
-			var name1 = encode('&#x540D;&#x5B57;');
+			var name1 = unescape('%u540D%u5B57');
 		}
 	} else if (mode == 2) {
 		var name1 = ['Jack', 'Jill'];
 		if (flag1) {
-			var name1 = [encode('&#x7537;&#x5B69;'), encode('&#x5973;&#x5B69;')];
+			var name1 = [unescape('%u7537%u5B69'), unescape('%u5973%u5B69')];
 		}
 	}
 	var a = 80;
@@ -153,7 +149,7 @@ loverose.start = function() {
 	}
 
 	var name2 = ['0', '1'];
-	if (flag2) var name2 = [encode('&#x2661;'), encode('&#x2661;')];
+	if (flag2) var name2 = [unescape('%u2661'), unescape('%u2661')];
 
 	var color3 = '#45d';
 	var color4 = '#5a6';
