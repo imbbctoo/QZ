@@ -23,20 +23,12 @@ piano.start = function() {
 
 	var scene = new lime.Scene();
 	var layer = new lime.Layer();
+
 	var sprite = new lime.Sprite().setSize(a, a / 900 * 500).setFill('assets/piano.png');
 
 	scene.appendChild(layer.setPosition(w / 2, h / 2));
 
 	layer.appendChild(sprite);
-
-	var l = new lime.Layer();
-
-	var input = document.createElement('input');
-	l.appendChild(input);
-
-	l.appendChild(new lime.Sprite().setFill(255, 255, 255).setSize(w, h).setPosition(-w / 4, -h / 4));
-
-	layer.appendChild(l.setPosition(-w / 2, -h / 2));
 
 	var mask = new lime.Sprite().setSize(w + 2, h + 2).setFill(255, 255, 255).appendChild(new lime.Label().setText('LOADING>>>'));
 	layer.appendChild(mask);
@@ -109,8 +101,6 @@ piano.start = function() {
 
 	var n1 = [65, 83, 68, 70, 71, 72, 74, 75, 76, 186];
 	var n2 = [81, 87, 82, 84, 85, 73, 79, 219];
-
-	goog.events.listen(sprite, ['mousedown', 'touchstart'], function() {input.focus();});
 
 	goog.events.listen(sprite, 'keyup', function() {
 		if (event.which == n1[0]) {
