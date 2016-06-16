@@ -5,14 +5,13 @@ goog.require('lime.Scene');
 
 xmastree.start = function() {
 	console.log('created by imbbctoo');
-	//eval(unescape('%63%6f%6e%73%6f%6c%65%2e%6c%6f%67%28%60%63%72%65%61%74%65%64%20%62%79%20%69%6d%62%62%63%74%6f%6f%60%29'));
 
 	var head = document.getElementsByTagName('head')[0];
 
 	var style = document.createElement('style');
 	style.type = 'text/css';
 
-	var css = '*{margin:0 auto;padding:0 auto;}body{background:black;overflow:hidden;}h1{text-align:center;color:green;text-transform:uppercase;}';
+	var css = 'body{background:black;z-index:-1;}';
 
 	style.appendChild(document.createTextNode(css));
 
@@ -23,8 +22,6 @@ xmastree.start = function() {
 	h = h < 460 ? 460 : h;
 
 	var director = new lime.Director(document.body, w, h);
-
-	if (director.getPosition().y > 0) location.reload();
 
 	var scene = new lime.Scene();
 

@@ -15,13 +15,22 @@ goog.require('numrubik.Table');
 numrubik.start = function() {
 	console.log('created by imbbctoo');
 
+	var head = document.getElementsByTagName('head')[0];
+
+	var style = document.createElement('style');
+	style.type = 'text/css';
+
+	var css = 'body{background:white;z-index:-1;}';
+
+	style.appendChild(document.createTextNode(css));
+
+	head.appendChild(style);
+
 	var w = 320;
 	var h = window.innerHeight / window.innerWidth * w;
 	h = h < 460 ? 460 : h;
 
 	numrubik.director = new lime.Director(document.body, w, h);
-
-	if (numrubik.director.getPosition().y > 0) location.reload();
 
 	numrubik.lime = new imbbctoo.Lime(numrubik.director.getSize().width / 2, numrubik.director.getSize().height - 40);
 

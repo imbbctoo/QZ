@@ -12,18 +12,18 @@ goog.require('myrose.Function');
 myrose.start = function() {
 	console.log('created by imbbctoo');
 
-	var sound = 0;
-
 	var head = document.getElementsByTagName('head')[0];
 
 	var style = document.createElement('style');
 	style.type = 'text/css';
 
-	var css = 'body{background:black;overflow:hidden;}';
+	var css = 'body{background:black;z-index:-1;}';
 
 	style.appendChild(document.createTextNode(css));
 
 	head.appendChild(style);
+
+	var sound = 0;
 
 	if (sound) {
 		var music = document.createElement('audio');

@@ -13,20 +13,29 @@ goog.require('lime.audio.Audio');
 drumset.start = function() {
 	console.log('created by imbbctoo');
 
+	var head = document.getElementsByTagName('head')[0];
+
+	var style = document.createElement('style');
+	style.type = 'text/css';
+
+	var css = 'body{background:gray;z-index:-1;}';
+
+	style.appendChild(document.createTextNode(css));
+
+	head.appendChild(style);
+
 	var director = new lime.Director(document.body, window.innerWidth, window.innerHeight);
 	var w = director.getSize().width;
 	var h = director.getSize().height;
 
 	var a = w > h ? h : w;
 
-	if (director.getPosition().y > 0) location.reload();
-
 	var scene = new lime.Scene();
 	var layer = new lime.Layer();
 	var sprite = new lime.Sprite().setSize(a, a).setFill('assets/drumset.png');
 
 	scene.appendChild(layer.setPosition(w / 2, h / 2));
-	
+
 	layer.appendChild(sprite);
 
 	var mask = new lime.Sprite().setSize(w + 2, h + 2).setFill(255, 255, 255).appendChild(new lime.Label().setText('LOADING>>>'));

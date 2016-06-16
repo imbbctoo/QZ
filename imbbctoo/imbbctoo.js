@@ -22,7 +22,7 @@ imbbctoo.start = function() {
 	var style = document.createElement('style');
 	style.type = 'text/css';
 
-	var css = 'body{background:black;overflow:hidden;}';
+	var css = 'body{background:black;z-index:-1;}';
 
 	style.appendChild(document.createTextNode(css));
 
@@ -33,8 +33,6 @@ imbbctoo.start = function() {
 	h = h < 460 ? 460 : h;
 
 	imbbctoo.director = new lime.Director(document.body, w, h);
-
-	if (imbbctoo.director.getPosition().y > 0) location.reload();
 
 	var scene = new lime.Scene();
 	var layerx = new lime.Layer();
@@ -151,22 +149,11 @@ imbbctoo.manage = function(name, layer, title) {
 			}
 		}
 	}
-	if (name.length > 0) goog.events.listen(icon[0], ['mousedown', 'touchstart'], function(e) {imbbctoo.showup(icon[0], a[0], e, d)});
-	if (name.length > 1) goog.events.listen(icon[1], ['mousedown', 'touchstart'], function(e) {imbbctoo.showup(icon[1], a[1], e, d)});
-	if (name.length > 2) goog.events.listen(icon[2], ['mousedown', 'touchstart'], function(e) {imbbctoo.showup(icon[2], a[2], e, d)});
-	if (name.length > 3) goog.events.listen(icon[3], ['mousedown', 'touchstart'], function(e) {imbbctoo.showup(icon[3], a[3], e, d)});
-	if (name.length > 4) goog.events.listen(icon[4], ['mousedown', 'touchstart'], function(e) {imbbctoo.showup(icon[4], a[4], e, d)});
-	if (name.length > 5) goog.events.listen(icon[5], ['mousedown', 'touchstart'], function(e) {imbbctoo.showup(icon[5], a[5], e, d)});
-	if (name.length > 6) goog.events.listen(icon[6], ['mousedown', 'touchstart'], function(e) {imbbctoo.showup(icon[6], a[6], e, d)});
-	if (name.length > 7) goog.events.listen(icon[7], ['mousedown', 'touchstart'], function(e) {imbbctoo.showup(icon[7], a[7], e, d)});
-	if (name.length > 8) goog.events.listen(icon[8], ['mousedown', 'touchstart'], function(e) {imbbctoo.showup(icon[8], a[8], e, d)});
-	if (name.length > 9) goog.events.listen(icon[9], ['mousedown', 'touchstart'], function(e) {imbbctoo.showup(icon[9], a[9], e, d)});
-	if (name.length > 10) goog.events.listen(icon[10], ['mousedown', 'touchstart'], function(e) {imbbctoo.showup(icon[10], a[10], e, d)});
-	if (name.length > 11) goog.events.listen(icon[11], ['mousedown', 'touchstart'], function(e) {imbbctoo.showup(icon[11], a[11], e, d)});
-	if (name.length > 12) goog.events.listen(icon[12], ['mousedown', 'touchstart'], function(e) {imbbctoo.showup(icon[12], a[12], e, d)});
-	if (name.length > 13) goog.events.listen(icon[13], ['mousedown', 'touchstart'], function(e) {imbbctoo.showup(icon[13], a[13], e, d)});
-	if (name.length > 14) goog.events.listen(icon[14], ['mousedown', 'touchstart'], function(e) {imbbctoo.showup(icon[14], a[14], e, d)});
-	if (name.length > 15) goog.events.listen(icon[15], ['mousedown', 'touchstart'], function(e) {imbbctoo.showup(icon[15], a[15], e, d)});
+	for (var i = 0; i < 16; i++) {
+		(function(i) {
+			if (name.length > i) goog.events.listen(icon[i], ['mousedown', 'touchstart'], function(e) {imbbctoo.showup(icon[i], a[i], e, d)});
+		})(i);
+	}
 };
 
 imbbctoo.showup = function(icon, a, e, d) {

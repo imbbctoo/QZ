@@ -15,6 +15,17 @@ goog.require('lime.transitions.Dissolve');
 dung2048.start = function() {
 	console.log('created by imbbctoo');
 
+	var head = document.getElementsByTagName('head')[0];
+
+	var style = document.createElement('style');
+	style.type = 'text/css';
+
+	var css = 'body{background:white;z-index:-1;}';
+
+	style.appendChild(document.createTextNode(css));
+
+	head.appendChild(style);
+
 	dung2048.h = new Image();
 	dung2048.h.src = 'assets/h.png';
 	dung2048.w = new Image();
@@ -33,8 +44,6 @@ dung2048.start = function() {
 	h = h < 460 ? 460 : h;
 
 	dung2048.director = new lime.Director(document.body, w, h);
-
-	if (dung2048.director.getPosition().y > 0) location.reload();
 
 	dung2048.lime = new imbbctoo.Lime(dung2048.director.getSize().width / 2, dung2048.director.getSize().height - 40);
 

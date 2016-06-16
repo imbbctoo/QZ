@@ -20,7 +20,7 @@ clapping.start = function() {
 	var style = document.createElement('style');
 	style.type = 'text/css';
 
-	var css = 'body{background:black;overflow:hidden;}';
+	var css = 'body{background:white;z-index:-1;}';
 
 	style.appendChild(document.createTextNode(css));
 
@@ -33,8 +33,6 @@ clapping.start = function() {
 	h = h < 460 ? 460 : h;
 
 	clapping.director = new lime.Director(document.body, w, h);
-
-	if (clapping.director.getPosition().y > 0) location.reload();
 
 	clapping.lime = new imbbctoo.Lime(clapping.director.getSize().width / 2, clapping.director.getSize().height - 40);
 

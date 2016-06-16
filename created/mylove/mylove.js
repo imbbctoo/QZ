@@ -12,20 +12,20 @@ goog.require('lime.animation.Sequence');
 mylove.start = function() {
 	console.log('created by imbbctoo');
 
-	var mode = 2;
-	var flag = 0;
-	var sound = 1;
-
 	var head = document.getElementsByTagName('head')[0];
 
 	var style = document.createElement('style');
 	style.type = 'text/css';
 
-	var css = 'body{background:black;overflow:hidden;}';
+	var css = 'body{background:black;z-index:-1;}';
 
 	style.appendChild(document.createTextNode(css));
 
 	head.appendChild(style);
+
+	var mode = 2;
+	var flag = 0;
+	var sound = 1;
 
 	if (sound) {
 		var music = document.createElement('audio');
@@ -35,8 +35,6 @@ mylove.start = function() {
 	}
 
 	var director = new lime.Director(document.body, 320, 500);
-
-	if (director.getPosition().y > 0) location.reload();
 
 	var scene = new lime.Scene();
 	var layer = new lime.Layer();

@@ -15,21 +15,21 @@ goog.require('loverose.Function');
 loverose.start = function() {
 	console.log('created by imbbctoo');
 
-	var mode = 1;
-	var flag1 = 0;
-	var sound = 1;
-	var flag2 = 0;
-
 	var head = document.getElementsByTagName('head')[0];
 
 	var style = document.createElement('style');
 	style.type = 'text/css';
 
-	var css = 'body{background:black;overflow:hidden;}';
+	var css = 'body{background:black;z-index:-1;}';
 
 	style.appendChild(document.createTextNode(css));
 
 	head.appendChild(style);
+
+	var mode = 1;
+	var flag1 = 0;
+	var sound = 1;
+	var flag2 = 0;
 
 	if (sound) {
 		var music = document.createElement('audio');
@@ -43,8 +43,6 @@ loverose.start = function() {
 	h = h < 460 ? 460 : h;
 
 	var director = new lime.Director(document.body, w, h);
-
-	if (director.getPosition().y > 0) location.reload();
 
 	var scene = new lime.Scene();
 	var layerx = new lime.Layer();

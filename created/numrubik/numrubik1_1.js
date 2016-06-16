@@ -41,22 +41,11 @@ numrubik.Game44 = function() {
 	this.appendChild(this.unit[14].setPosition(96, 32));
 	this.appendChild(this.unit[15].setPosition(96, 96));
 
-	goog.events.listen(this.unit[0], ['touchstart', 'mousedown'], function() {this.combatRun(0);}, false, this);
-	goog.events.listen(this.unit[1], ['touchstart', 'mousedown'], function() {this.combatRun(1);}, false, this);
-	goog.events.listen(this.unit[2], ['touchstart', 'mousedown'], function() {this.combatRun(2);}, false, this);
-	goog.events.listen(this.unit[3], ['touchstart', 'mousedown'], function() {this.combatRun(3);}, false, this);
-	goog.events.listen(this.unit[4], ['touchstart', 'mousedown'], function() {this.combatRun(4);}, false, this);
-	goog.events.listen(this.unit[5], ['touchstart', 'mousedown'], function() {this.combatRun(5);}, false, this);
-	goog.events.listen(this.unit[6], ['touchstart', 'mousedown'], function() {this.combatRun(6);}, false, this);
-	goog.events.listen(this.unit[7], ['touchstart', 'mousedown'], function() {this.combatRun(7);}, false, this);
-	goog.events.listen(this.unit[8], ['touchstart', 'mousedown'], function() {this.combatRun(8);}, false, this);
-	goog.events.listen(this.unit[9], ['touchstart', 'mousedown'], function() {this.combatRun(9);}, false, this);
-	goog.events.listen(this.unit[10], ['touchstart', 'mousedown'], function() {this.combatRun(10);}, false, this);
-	goog.events.listen(this.unit[11], ['touchstart', 'mousedown'], function() {this.combatRun(11);}, false, this);
-	goog.events.listen(this.unit[12], ['touchstart', 'mousedown'], function() {this.combatRun(12);}, false, this);
-	goog.events.listen(this.unit[13], ['touchstart', 'mousedown'], function() {this.combatRun(13);}, false, this);
-	goog.events.listen(this.unit[14], ['touchstart', 'mousedown'], function() {this.combatRun(14);}, false, this);
-	goog.events.listen(this.unit[15], ['touchstart', 'mousedown'], function() {this.combatRun(15);}, false, this);
+	for (var i = 0; i < 16; i++) {
+		(function(i, _this) {
+			goog.events.listen(_this.unit[i], ['touchstart', 'mousedown'], function() {_this.combatRun(i);}, false, _this);
+		})(i, this);
+	}
 
 	this.notice = new numrubik.Notice();
 	this.appendChild(this.notice.setOpacity(0));

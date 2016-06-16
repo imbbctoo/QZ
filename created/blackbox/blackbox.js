@@ -16,7 +16,7 @@ blackbox.start = function() {
 	var style = document.createElement('style');
 	style.type = 'text/css';
 
-	var css = 'body{background:black;overflow:hidden;}';
+	var css = 'body{background:black;z-index:-1;}';
 
 	style.appendChild(document.createTextNode(css));
 
@@ -27,8 +27,6 @@ blackbox.start = function() {
 	h = h < 460 ? 460 : h;
 
 	blackbox.director = new lime.Director(document.body, w, h);
-
-	if (blackbox.director.getPosition().y > 0) location.reload();
 
 	blackbox.lime = new imbbctoo.Lime(blackbox.director.getSize().width / 2, blackbox.director.getSize().height - 40);
 

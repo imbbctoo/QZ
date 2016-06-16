@@ -27,7 +27,7 @@ blackjack.start = function() {
 	var style = document.createElement('style');
 	style.type = 'text/css';
 
-	var css = 'body{background:black;overflow:hidden;}';
+	var css = 'body{background:black;z-index:-1;}';
 
 	style.appendChild(document.createTextNode(css));
 
@@ -38,8 +38,6 @@ blackjack.start = function() {
 	h = h < 460 ? 460 : h;
 
 	blackjack.director = new lime.Director(document.body, w, h);
-
-	if (blackjack.director.getPosition().y > 0) location.reload();
 
 	blackjack.lime = new imbbctoo.Lime(w / 2, h - 40);
 

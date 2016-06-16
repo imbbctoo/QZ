@@ -34,15 +34,11 @@ numrubik.Game33 = function() {
 	this.appendChild(this.unit[7].setPosition(80, 0));
 	this.appendChild(this.unit[8].setPosition(80, 80));
 
-	goog.events.listen(this.unit[0], ['touchstart', 'mousedown'], function() {this.combatRun(0);}, false, this);
-	goog.events.listen(this.unit[1], ['touchstart', 'mousedown'], function() {this.combatRun(1);}, false, this);
-	goog.events.listen(this.unit[2], ['touchstart', 'mousedown'], function() {this.combatRun(2);}, false, this);
-	goog.events.listen(this.unit[3], ['touchstart', 'mousedown'], function() {this.combatRun(3);}, false, this);
-	goog.events.listen(this.unit[4], ['touchstart', 'mousedown'], function() {this.combatRun(4);}, false, this);
-	goog.events.listen(this.unit[5], ['touchstart', 'mousedown'], function() {this.combatRun(5);}, false, this);
-	goog.events.listen(this.unit[6], ['touchstart', 'mousedown'], function() {this.combatRun(6);}, false, this);
-	goog.events.listen(this.unit[7], ['touchstart', 'mousedown'], function() {this.combatRun(7);}, false, this);
-	goog.events.listen(this.unit[8], ['touchstart', 'mousedown'], function() {this.combatRun(8);}, false, this);
+	for (var i = 0; i < 9; i++) {
+		(function(i, _this) {
+			goog.events.listen(_this.unit[i], ['touchstart', 'mousedown'], function() {_this.combatRun(i);}, false, _this);
+		})(i, this);
+	}
 
 	this.notice = new numrubik.Notice();
 	this.appendChild(this.notice.setOpacity(0));
